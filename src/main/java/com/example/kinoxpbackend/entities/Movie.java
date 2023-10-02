@@ -1,10 +1,10 @@
 package com.example.kinoxpbackend.entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Movie {
@@ -21,6 +21,17 @@ public class Movie {
 
 
 
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Showtime> showtimes = new HashSet<>();
+
+
+    public Set<Showtime> getShowtimes() {
+        return showtimes;
+    }
+
+    public void setShowtimes(Set<Showtime> showtimes) {
+        this.showtimes = showtimes;
+    }
 
     public int getId() {
         return id;

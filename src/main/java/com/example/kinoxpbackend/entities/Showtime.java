@@ -3,12 +3,14 @@ package com.example.kinoxpbackend.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
-public class ShowTime {
+public class Showtime {
 
 
     @Id
@@ -17,6 +19,11 @@ public class ShowTime {
     private LocalTime time;
     //Movie object
     //Theater object
+
+
+    @ManyToOne
+    @JoinColumn(name = "movie", referencedColumnName = "id")
+    private Movie movie;
 
 
     public int getId() {
@@ -41,5 +48,13 @@ public class ShowTime {
 
     public void setTime(LocalTime time) {
         this.time = time;
+    }
+
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
     }
 }
