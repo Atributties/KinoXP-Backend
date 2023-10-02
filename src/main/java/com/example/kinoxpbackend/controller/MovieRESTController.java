@@ -72,19 +72,4 @@ public class MovieRESTController {
         List<Movie> movies = movieService.findAllByCategory(category);
         return new ResponseEntity<>(movies, HttpStatus.OK);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
