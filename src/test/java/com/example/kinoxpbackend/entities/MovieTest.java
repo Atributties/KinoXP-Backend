@@ -107,5 +107,27 @@ class MovieTest {
         assertEquals(2, movies.size());
     }
 
+    @Test
+    void testFindAllByCategory2() {
+        // Insert test data into the database
+        Movie movie1 = new Movie();
+        movie1.setTitle("Movie Title 1");
+        movie1.setCategory(MovieCategories.ACTION);
+        Movie movie2 = new Movie();
+        movie2.setTitle("Another Movie Title");
+        movie2.setCategory(MovieCategories.ACTION);
+        Movie movie3 = new Movie();
+        movie3.setTitle("This is a film 4");
+        movie3.setCategory(MovieCategories.COMEDY);
+        movieRepository.saveAll(List.of(movie1, movie2, movie3));
+
+        // Ensure that the category comparison is case-insensitive
+        String searchTerm = "comedy";
+        List<Movie> movies = movieRepository.findAllByCategoryIgnoreCase(searchTerm);
+
+        // Assert that the correct number of movies with the category "COMEDY" is found
+        assertEquals(1, movies.size());
+    }
+
 
 }
