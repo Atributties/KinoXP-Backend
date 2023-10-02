@@ -1,6 +1,7 @@
 package com.example.kinoxpbackend.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -22,6 +23,7 @@ public class Movie {
 
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
     private Set<Showtime> showtimes = new HashSet<>();
 
 
