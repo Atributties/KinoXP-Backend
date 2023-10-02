@@ -23,6 +23,7 @@ public class Movie {
     private AgeLimit ageLimit;
     private Double duration;
     private String description;
+    private String imageUrl;
 
 
 
@@ -35,7 +36,21 @@ public class Movie {
     private Reservation reservation;
 
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
+    }
 
     public Set<Showtime> getShowtimes() {
         return showtimes;
