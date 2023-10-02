@@ -21,39 +21,49 @@ class MovieTest {
     MovieRepository movieRepository;
 
 
-    @BeforeEach
-    void setupTestData(){
-        // Arrange: Create a new movie entity with sample attributes.
+    @Test
+    void createMovie() {
         Movie movie = new Movie();
         movie.setTitle("Sample Movie");
         movie.setCategory("Action");
         movie.setAgeLimit(18);
         movie.setDuration(120.0);
         movie.setDescription("A sample movie description");
-
-        // Act: Save the movie to the database.
         movieRepository.save(movie);
     }
 
 
-
     @Test
     void testGetCreatedMovie() {
+        Movie movie = new Movie();
+        movie.setTitle("Sample Movie");
+        movie.setCategory("Action");
+        movie.setAgeLimit(18);
+        movie.setDuration(120.0);
+        movie.setDescription("A sample movie description");
+        movieRepository.save(movie);
         List<Movie> lst =  movieRepository.findAll();
         assertEquals(1, lst.size());
 
     }
 
+    @Test
+    void testFindAllByTitleContaining() {
+        // Insert test data into the database
+        Movie movie1 = new Movie();
+        movie1.setTitle("Movie Title 1");
+        Movie movie2 = new Movie();
+        movie2.setTitle("Another Movie Title");
+        Movie movie3 = new Movie();
+        movie3.setTitle("Movie 4");
+        movieRepository.saveAll(List.of(movie1, movie2, movie3));
 
+        String searchTerm = "1";
+        List<Movie> movies = movieRepository.findAllByTitleContaining(searchTerm);
 
-
-
-
-
-
-
-
-
+        // Assert that the correct number of movies containing "Movie" in their titles is found
+        assertEquals(1, movies.size());
+    }
 
 
 
