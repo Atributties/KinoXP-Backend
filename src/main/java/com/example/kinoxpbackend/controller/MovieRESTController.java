@@ -67,6 +67,12 @@ public class MovieRESTController {
         }
     }
 
+    @GetMapping("/movie/category/{category}")
+    public ResponseEntity<List<Movie>> getMoviesByCategory(@PathVariable String category) {
+        List<Movie> movies = movieService.findAllByCategory(category);
+        return new ResponseEntity<>(movies, HttpStatus.OK);
+    }
+
 
 
 

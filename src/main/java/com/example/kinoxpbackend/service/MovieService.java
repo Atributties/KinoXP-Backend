@@ -39,4 +39,8 @@ public class MovieService {
     public void deleteById(String id) {
         movieRepository.deleteById(id);
     }
+
+    public List<Movie> findAllByCategory(String category) {
+        return movieRepository.findAllByCategoryIgnoreCase(category);
+    }
 }
