@@ -29,7 +29,7 @@ public class InitData implements CommandLineRunner {
         movie1.setDescription("A sample movie description");
 
         Movie movie2 = new Movie();
-        movie2.setTitle("Another Movie Title");
+        movie2.setTitle("Movie title 2");
         movie2.setImageUrl("https://img-cdn.sfanytime.com/COVERM/99a66254-3e74-4698-b9fb-9f81010f5574_COVERM_01.jpg?w=375&ar=0.692&fit=crop&fm=pjpg&s=9b39d41ba54811a9f2ba609ee8d780dd");
         movie2.setCategory(MovieCategories.COMEDY);
         movie2.setAgeLimit(AgeLimit.PG_13);
