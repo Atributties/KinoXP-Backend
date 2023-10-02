@@ -129,5 +129,49 @@ class MovieTest {
         assertEquals(1, movies.size());
     }
 
+    @Test
+    void testFindAllByAgeLimit() {
+        // Insert test data into the database
+        Movie movie1 = new Movie();
+        movie1.setTitle("Movie Title 1");
+        movie1.setAgeLimit(AgeLimit.PG_13);
+        Movie movie2 = new Movie();
+        movie2.setTitle("Another Movie Title");
+        movie2.setAgeLimit(AgeLimit.PG_13);
+        Movie movie3 = new Movie();
+        movie3.setTitle("This is a film 4");
+        movie3.setAgeLimit(AgeLimit.R);
+        movieRepository.saveAll(List.of(movie1, movie2, movie3));
+
+        // Ensure that the age limit comparison is case-insensitive
+        String searchTerm = "PG_13";
+        List<Movie> movies = movieRepository.findAllByAgeLimitIgnoreCase(searchTerm);
+
+        // Assert that the correct number of movies with the age limit "PG_13" is found
+        assertEquals(2, movies.size());
+    }
+
+    @Test
+    void testFindAllByAgeLimit2() {
+        // Insert test data into the database
+        Movie movie1 = new Movie();
+        movie1.setTitle("Movie Title 1");
+        movie1.setAgeLimit(AgeLimit.PG_13);
+        Movie movie2 = new Movie();
+        movie2.setTitle("Another Movie Title");
+        movie2.setAgeLimit(AgeLimit.PG_13);
+        Movie movie3 = new Movie();
+        movie3.setTitle("This is a film 4");
+        movie3.setAgeLimit(AgeLimit.R);
+        movieRepository.saveAll(List.of(movie1, movie2, movie3));
+
+        // Ensure that the age limit comparison is case-insensitive
+        String searchTerm = "r";
+        List<Movie> movies = movieRepository.findAllByAgeLimitIgnoreCase(searchTerm);
+
+        // Assert that the correct number of movies with the age limit "R" is found
+        assertEquals(1, movies.size());
+    }
+
 
 }

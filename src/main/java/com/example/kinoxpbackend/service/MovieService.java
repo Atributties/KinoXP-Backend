@@ -43,4 +43,8 @@ public class MovieService {
     public List<Movie> findAllByCategory(String category) {
         return movieRepository.findAllByCategoryIgnoreCase(category);
     }
+
+    public List<Movie> findAllByAgeLimitIgnoreCase(String ageLimit) {
+        return movieRepository.findAllByAgeLimitIgnoreCase(ageLimit);
+    }
 }

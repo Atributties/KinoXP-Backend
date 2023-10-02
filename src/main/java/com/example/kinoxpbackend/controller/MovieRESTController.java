@@ -72,4 +72,10 @@ public class MovieRESTController {
         List<Movie> movies = movieService.findAllByCategory(category);
         return new ResponseEntity<>(movies, HttpStatus.OK);
     }
+
+    @GetMapping("/movie/ageLimit/{ageLimit}")
+    public ResponseEntity<List<Movie>> getMoviesByAgeLimit(@PathVariable String ageLimit) {
+        List<Movie> movies = movieService.findAllByAgeLimitIgnoreCase(ageLimit);
+        return new ResponseEntity<>(movies, HttpStatus.OK);
+    }
 }
