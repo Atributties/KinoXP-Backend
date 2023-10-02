@@ -67,5 +67,22 @@ class MovieTest {
         assertEquals(1, movies.size());
     }
 
+    @Test
+    void testFindAllByTitleContaining2() {
+        // Insert test data into the database
+        Movie movie1 = new Movie();
+        movie1.setTitle("Movie Title 1");
+        Movie movie2 = new Movie();
+        movie2.setTitle("Another Movie Title");
+        Movie movie3 = new Movie();
+        movie3.setTitle("This is a film 4");
+        movieRepository.saveAll(List.of(movie1, movie2, movie3));
+
+        String searchTerm = "Movie";
+        List<Movie> movies = movieRepository.findAllByTitleContaining(searchTerm);
+
+        // Assert that the correct number of movies containing "Movie" in their titles is found
+        assertEquals(2, movies.size());
+    }
 
 }
