@@ -9,8 +9,10 @@ public class Theater {
 
     @Id
     private String name;
-    private int rows;
+    private int numberOfRows;
     private int seatsPrRow;
+
+
 
     public String getName() {
         return name;
@@ -21,11 +23,11 @@ public class Theater {
     }
 
     public int getRows() {
-        return rows;
+        return numberOfRows;
     }
 
-    public void setRows(int rows) {
-        this.rows = rows;
+    public void setRows(int numberOfRows) {
+        this.numberOfRows = numberOfRows;
     }
 
     public int getSeatsPrRow() {

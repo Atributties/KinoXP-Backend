@@ -3,7 +3,8 @@ package com.example.kinoxpbackend.entities;
 public class Reservation {
 
 
-    // user object
+
+    //user object
     //Movie object
     //Showtime object
     //Theater object
