@@ -1,5 +1,7 @@
 package com.example.kinoxpbackend.entities;
 
+import com.example.kinoxpbackend.enums.AgeLimit;
+import com.example.kinoxpbackend.enums.MovieCategories;
 import com.example.kinoxpbackend.repositories.MovieRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,8 +27,8 @@ class MovieTest {
     void createMovie() {
         Movie movie = new Movie();
         movie.setTitle("Sample Movie");
-        movie.setCategory("Action");
-        movie.setAgeLimit(18);
+        movie.setCategory(MovieCategories.ACTION);
+        movie.setAgeLimit(AgeLimit.R);
         movie.setDuration(120.0);
         movie.setDescription("A sample movie description");
         movieRepository.save(movie);
@@ -37,8 +39,8 @@ class MovieTest {
     void testGetCreatedMovie() {
         Movie movie = new Movie();
         movie.setTitle("Sample Movie");
-        movie.setCategory("Action");
-        movie.setAgeLimit(18);
+        movie.setCategory(MovieCategories.ACTION);
+        movie.setAgeLimit(AgeLimit.PG_13);
         movie.setDuration(120.0);
         movie.setDescription("A sample movie description");
         movieRepository.save(movie);
@@ -64,7 +66,6 @@ class MovieTest {
         // Assert that the correct number of movies containing "Movie" in their titles is found
         assertEquals(1, movies.size());
     }
-
 
 
 }

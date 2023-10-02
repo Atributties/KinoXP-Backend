@@ -43,6 +43,33 @@ public class MovieRESTController {
         }
     }
 
+    @PutMapping("/movie/{id}")
+    public ResponseEntity<Movie> putMovie(@PathVariable String id, @RequestBody Movie movie) {
+        Optional<Movie> orgMovie = movieService.findById(id);
+        if(orgMovie.isPresent()) {
+            movie.setId(Integer.parseInt(id));
+            movieService.save(movie);
+            return ResponseEntity.ok(movie);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+    @DeleteMapping("/movie/{id}")
+    public ResponseEntity<String> deleteMovie(@PathVariable String id){
+        Optional<Movie> orgMovie = movieService.findById(id);
+        if(orgMovie.isPresent()) {
+            movieService.deleteById(id);
+            return ResponseEntity.ok("Movie deleted");
+        }else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Movie not found");
+        }
+    }
+
+
+
+
 
 
 
