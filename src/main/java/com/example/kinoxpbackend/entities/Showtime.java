@@ -1,10 +1,7 @@
 package com.example.kinoxpbackend.entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -24,6 +21,10 @@ public class Showtime {
     @ManyToOne
     @JoinColumn(name = "movie", referencedColumnName = "id")
     private Movie movie;
+
+
+    @OneToOne(mappedBy = "showtime")
+    private Reservation reservation;
 
 
     public int getId() {

@@ -3,6 +3,7 @@ package com.example.kinoxpbackend.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Theater {
@@ -13,6 +14,10 @@ public class Theater {
     private int seatsPrRow;
 
 
+
+
+    @OneToOne(mappedBy = "theater")
+    private Reservation reservation;
 
     public String getName() {
         return name;

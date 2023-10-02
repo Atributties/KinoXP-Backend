@@ -25,6 +25,12 @@ public class Movie {
     private Set<Showtime> showtimes = new HashSet<>();
 
 
+    @OneToOne(mappedBy = "movie")
+    private Reservation reservation;
+
+
+
+
     public Set<Showtime> getShowtimes() {
         return showtimes;
     }

@@ -2,6 +2,8 @@ package com.example.kinoxpbackend.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class User {
@@ -16,6 +18,9 @@ public class User {
     private String email;
     private int phoneNumber;
 
+
+    @OneToOne(mappedBy = "user")
+    private Reservation reservation;
 
     public String getName() {
         return name;
