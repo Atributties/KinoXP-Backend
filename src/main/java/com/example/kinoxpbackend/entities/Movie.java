@@ -1,6 +1,8 @@
 package com.example.kinoxpbackend.entities;
 
 
+import com.example.kinoxpbackend.enums.AgeLimit;
+import com.example.kinoxpbackend.enums.MovieCategories;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
@@ -15,8 +17,10 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String title;
-    private String category;
-    private int ageLimit;
+    @Enumerated(EnumType.STRING) // Use EnumType.STRING to store enum values as strings in the database
+    private MovieCategories category;
+    @Enumerated(EnumType.STRING)
+    private AgeLimit ageLimit;
     private Double duration;
     private String description;
 
@@ -57,19 +61,19 @@ public class Movie {
         this.title = title;
     }
 
-    public String getCategory() {
+    public MovieCategories getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(MovieCategories category) {
         this.category = category;
     }
 
-    public int getAgeLimit() {
+    public AgeLimit getAgeLimit() {
         return ageLimit;
     }
 
-    public void setAgeLimit(int ageLimit) {
+    public void setAgeLimit(AgeLimit ageLimit) {
         this.ageLimit = ageLimit;
     }
 
