@@ -35,6 +35,22 @@ public class Movie {
     @OneToOne(mappedBy = "movie")
     private Reservation reservation;
 
+    public Movie() {
+    }
+    public Movie(int id, String title) {
+        this.id = id;
+        this.title = title;
+    }
+
+    public Movie(String title, String imageUrl, MovieCategories category, AgeLimit ageLimit, Double duration, String description) {
+        this.title = title;
+        this.imageUrl = imageUrl;
+        this.category = category;
+        this.ageLimit = ageLimit;
+        this.duration = duration;
+        this.description = description;
+    }
+
 
     public String getImageUrl() {
         return imageUrl;

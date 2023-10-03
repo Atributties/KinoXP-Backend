@@ -88,4 +88,13 @@ public class MovieRESTController {
         List<Movie> movies = movieService.findAllByAgeLimitIgnoreCase(ageLimit);
         return new ResponseEntity<>(movies, HttpStatus.OK);
     }
+
+    @GetMapping("/movie/titles")
+    public ResponseEntity<List<Movie>> getMovieTitles() {
+        List<Movie> movieTitles = movieService.findAll().stream()
+                .map(movie -> new Movie(movie.getId(), movie.getTitle()))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(movieTitles, HttpStatus.OK);
+    }
+
 }
