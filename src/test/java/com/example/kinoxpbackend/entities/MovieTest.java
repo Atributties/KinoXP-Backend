@@ -173,5 +173,36 @@ class MovieTest {
         assertEquals(1, movies.size());
     }
 
+    @Test
+    void testPutMovieSuccess() {
+        Movie movie = new Movie();
+        movie.setTitle("Sample Movie");
+        movie.setCategory(MovieCategories.ACTION);
+        movie.setAgeLimit(AgeLimit.R);
+        movie.setDuration(120.0);
+        movie.setDescription("A sample movie description");
+        movieRepository.save(movie);
+        //update movie duration
+        movie.setDuration(130.0);
+        movieRepository.save(movie);
+        //check if movie duration is updated
+        assertEquals(130.0, movie.getDuration());
+    }
+
+    //delete movie
+    @Test
+    void testDeleteMovie() {
+        Movie movie = new Movie();
+        movie.setTitle("Sample Movie");
+        movie.setCategory(MovieCategories.ACTION);
+        movie.setAgeLimit(AgeLimit.R);
+        movie.setDuration(120.0);
+        movie.setDescription("A sample movie description");
+        movieRepository.save(movie);
+        //delete movie
+        movieRepository.delete(movie);
+        //check if movie is deleted
+        assertEquals(0, movieRepository.findAll().size());
+    }
 
 }
