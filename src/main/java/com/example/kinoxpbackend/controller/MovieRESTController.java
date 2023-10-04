@@ -26,7 +26,7 @@ public class MovieRESTController {
         return movieService.findAll();
     }
 
-    @GetMapping("/movie/id/{id}")
+    @GetMapping("/movie/{id}")
     public ResponseEntity<Movie> getMovieById(@PathVariable String id) {
         Optional<Movie> movie = movieService.findById(id);
         if(movie.isPresent()) {

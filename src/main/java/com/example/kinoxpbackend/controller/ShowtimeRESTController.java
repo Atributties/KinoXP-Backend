@@ -17,6 +17,12 @@ public class ShowtimeRESTController {
     @Autowired
     private ShowtimeService showtimeService;
 
+    @GetMapping("/movie/{movieId}")
+    public ResponseEntity<List<Showtime>> getShowtimesByMovie(@PathVariable int movieId) {
+        List<Showtime> showtimes = showtimeService.findByMovieId(movieId);
+        return new ResponseEntity<>(showtimes, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Showtime> createShowtime(@RequestBody Showtime showtime) {
         Showtime createdShowtime = showtimeService.save(showtime);
@@ -27,11 +33,7 @@ public class ShowtimeRESTController {
         }
     }
 
-    @GetMapping("/movie/{movieId}")
-    public ResponseEntity<List<Showtime>> getShowtimesByMovie(@PathVariable int movieId) {
-        List<Showtime> showtimes = showtimeService.findByMovieId(movieId);
-        return new ResponseEntity<>(showtimes, HttpStatus.OK);
-    }
+
 
 }
 
