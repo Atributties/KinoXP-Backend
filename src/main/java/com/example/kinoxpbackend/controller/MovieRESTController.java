@@ -36,7 +36,7 @@ public class MovieRESTController {
         }
     }
 
-    @GetMapping("/movie/{title}")
+    @GetMapping("/movie/title/{title}")
     public ResponseEntity<List<Movie>> getMoviesByTitle(@PathVariable String title) {
         List<Movie> movies = movieService.findAllByTitleContaining(title);
         return new ResponseEntity<>(movies, HttpStatus.OK);
