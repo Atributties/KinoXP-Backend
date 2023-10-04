@@ -98,6 +98,93 @@ class MovieRESTControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"1", "2", "3", "4", "5"})
+    public void testPutMovieById(String id){
+        // Arrange
+        List<Movie> expectedMovies = Collections.singletonList(new Movie());
+        when(movieService.findById(id)).thenReturn(Optional.of(expectedMovies.get(0)));
+
+        // Act
+        ResponseEntity<Movie> response = movieRESTController.putMovie(id, expectedMovies.get(0));
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"1", "2", "3", "4", "5"})
+    public void testPutMovieByIdNotFound(String id){
+        // Arrange
+        List<Movie> expectedMovies = Collections.singletonList(new Movie());
+        when(movieService.findById(id)).thenReturn(Optional.empty());
+
+        // Act
+        ResponseEntity<Movie> response = movieRESTController.putMovie(id, expectedMovies.get(0));
+
+        // Assert
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"1", "2", "3", "4", "5"})
+    public void testGetMoviesByTitle(String title){
+        // Arrange
+        List<Movie> expectedMovies = Collections.singletonList(new Movie());
+        when(movieService.findAllByTitleContaining(title)).thenReturn(expectedMovies);
+
+        // Act
+        ResponseEntity<List<Movie>> response = movieRESTController.getMoviesByTitle(title);
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(expectedMovies, response.getBody());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"1", "2", "3", "4", "5"})
+    public void testGetMoviesByCategory(String category){
+        // Arrange
+        List<Movie> expectedMovies = Collections.singletonList(new Movie());
+        when(movieService.findAllByCategory(category)).thenReturn(expectedMovies);
+
+        // Act
+        ResponseEntity<List<Movie>> response = movieRESTController.getMoviesByCategory(category);
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(expectedMovies, response.getBody());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"1", "2", "3", "4", "5"})
+    public void testGetMoviesByAgeLimit(String ageLimit){
+        // Arrange
+        List<Movie> expectedMovies = Collections.singletonList(new Movie());
+        when(movieService.findAllByAgeLimitIgnoreCase(ageLimit)).thenReturn(expectedMovies);
+
+        // Act
+        ResponseEntity<List<Movie>> response = movieRESTController.getMoviesByAgeLimit(ageLimit);
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(expectedMovies, response.getBody());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"1", "2", "3", "4", "5"})
+    public void testPostMovie(String id){
+        // Arrange
+        List<Movie> expectedMovies = Collections.singletonList(new Movie());
+        when(movieService.save(expectedMovies.get(0))).thenReturn(expectedMovies.get(0));
+
+        // Act
+        ResponseEntity<Movie> response = movieRESTController.postMovie(expectedMovies.get(0));
+
+        // Assert
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(expectedMovies.get(0), response.getBody());
+    }
 
 
 }
