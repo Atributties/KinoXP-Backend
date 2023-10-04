@@ -26,7 +26,7 @@ public class MovieRESTController {
         return movieService.findAll();
     }
 
-    @GetMapping("/movie/id/{id}")
+    @GetMapping("/movie/{id}")
     public ResponseEntity<Movie> getMovieById(@PathVariable String id) {
         Optional<Movie> movie = movieService.findById(id);
         if(movie.isPresent()) {
@@ -36,7 +36,7 @@ public class MovieRESTController {
         }
     }
 
-    @GetMapping("/movie/{title}")
+    @GetMapping("/movie/title/{title}")
     public ResponseEntity<List<Movie>> getMoviesByTitle(@PathVariable String title) {
         List<Movie> movies = movieService.findAllByTitleContaining(title);
         return new ResponseEntity<>(movies, HttpStatus.OK);
