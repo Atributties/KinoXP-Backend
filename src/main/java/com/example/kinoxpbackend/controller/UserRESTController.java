@@ -27,13 +27,18 @@ public class UserRESTController {
 
     @PostMapping("/user")
     public ResponseEntity<User> createUser(@RequestBody User user) {
+        System.out.println(user.toString());
+        System.out.println(user.getPhoneNumber());
         User createdUser = userService.save(user);
-        if (createdUser != null) {
-            return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
-        } else {
+        if (createdUser == null) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        } else {
+            System.out.println(createdUser.toString());
+            System.out.println(createdUser.getPhoneNumber());
+            return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
         }
     }
+
 
     @PostMapping("/user/login")
     public ResponseEntity<User> userLogin(@RequestBody User loginDetails) {

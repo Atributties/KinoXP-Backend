@@ -149,7 +149,7 @@ class UserRESTControllerTest {
         expectedUser.setEmail(email);
         expectedUser.setPassword("password123");
         expectedUser.setRole(Roles.ADMIN);
-        expectedUser.setPhoneNumber(55783456);
+        expectedUser.setPhoneNumber("55783456");
         expectedUser.setName("Kurt");
         when(userService.save(expectedUser)).thenReturn(expectedUser);
 

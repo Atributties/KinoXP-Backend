@@ -2,6 +2,7 @@ package com.example.kinoxpbackend.entities;
 
 import com.example.kinoxpbackend.enums.Roles;
 import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
 
 @Entity
 public class User {
@@ -14,7 +15,7 @@ public class User {
     private String password;
     @Id
     private String email;
-    private int phoneNumber;
+    private String phoneNumber;
 
 
     @OneToOne(mappedBy = "user")
@@ -23,7 +24,7 @@ public class User {
     public User() {
     }
 
-    public User(String name, Roles role, String password, String email, int phoneNumber) {
+    public User(String name, Roles role, String password, String email, String phoneNumber) {
         this.name = name;
         this.role = role;
         this.password = password;
@@ -68,11 +69,11 @@ public class User {
         this.email = email;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 }

@@ -57,13 +57,13 @@ public class InitData implements CommandLineRunner {
 
 
         // Create and save user entities using the UserService
-        User user1 = new User("John Doe", Roles.CUSTOMER, "password123", "johndoe@example.com", 123456);
+        User user1 = new User("John Doe", Roles.CUSTOMER, "password123", "johndoe@example.com", "123456");
         userService.save(user1);
 
-        User user2 = new User("Jane Smith", Roles.CUSTOMER, "securepassword", "janesmith@example.com", 987654);
+        User user2 = new User("Jane Smith", Roles.CUSTOMER, "securepassword", "janesmith@example.com", "987654");
         userService.save(user2);
 
-        User user3 = new User("Admin User", Roles.ADMIN, "adminpassword", "admin@example.com", 55555);
+        User user3 = new User("Admin User", Roles.ADMIN, "adminpassword", "admin@example.com", "23232323");
         userService.save(user3);
 
 
