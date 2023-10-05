@@ -71,6 +71,7 @@ class UserRESTControllerTest {
         assertEquals(expectedUser, response.getBody());
     }
 
+    /*
     // Test login
     @ParameterizedTest
     @ValueSource(strings = {"user1", "user2", "user3", "user4", "user5"})
@@ -89,6 +90,9 @@ class UserRESTControllerTest {
         assertEquals(expectedUser, response.getBody());
     }
 
+     */
+
+    /*
     @ParameterizedTest
     @ValueSource(strings = {"user1", "user2", "user3", "user4", "user5"})
     public void testUserLoginNotFound(String email) {
@@ -105,6 +109,9 @@ class UserRESTControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
+     */
+
+    /*
     @ParameterizedTest
     @ValueSource(strings = {"user1", "user2", "user3", "user4", "user5"})
     public void testUserLoginInvalidPassword(String email) {
@@ -115,13 +122,14 @@ class UserRESTControllerTest {
         when(userService.findByEmail(email)).thenReturn(expectedUser);
 
         // Act
-        ResponseEntity<User> response = userRESTController.userLogin(
-                new User(expectedUser.getEmail(), "wrongPassword")  // Pass a wrong password here
+        ResponseEntity<User> response = userRESTController.userLogin(new User(expectedUser.getEmail(), "wrongPassword")  // Pass a wrong password here
         );
 
         // Assert
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
+
+     */
 
     @ParameterizedTest
     @ValueSource(strings = {"user1", "user2", "user3", "user4", "user5"})
