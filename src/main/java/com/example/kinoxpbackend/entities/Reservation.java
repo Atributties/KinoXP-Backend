@@ -17,6 +17,7 @@ public class Reservation {
     private User user;
 
 
+    //Drop
     @OneToOne
     @JoinColumn(name = "movie", referencedColumnName = "id")
     private Movie movie;
@@ -27,6 +28,7 @@ public class Reservation {
     private Showtime showtime;
 
 
+    //Drop
     @OneToOne
     @JoinColumn(name = "theater", referencedColumnName = "name")
     private Theater theater;

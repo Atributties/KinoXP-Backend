@@ -2,9 +2,12 @@ package com.example.kinoxpbackend.config;
 
 
 import com.example.kinoxpbackend.entities.Movie;
+import com.example.kinoxpbackend.entities.User;
 import com.example.kinoxpbackend.enums.AgeLimit;
 import com.example.kinoxpbackend.enums.MovieCategories;
+import com.example.kinoxpbackend.enums.Roles;
 import com.example.kinoxpbackend.service.MovieService;
+import com.example.kinoxpbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -15,6 +18,8 @@ public class InitData implements CommandLineRunner {
 
     @Autowired
     MovieService movieService;
+    @Autowired
+    UserService userService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -48,6 +53,20 @@ public class InitData implements CommandLineRunner {
         movieService.save(movie1);
         movieService.save(movie2);
         movieService.save(movie3);
+
+
+
+        // Create and save user entities using the UserService
+        User user1 = new User("John Doe", Roles.CUSTOMER, "password123", "johndoe@example.com", 123456);
+        userService.save(user1);
+
+        User user2 = new User("Jane Smith", Roles.CUSTOMER, "securepassword", "janesmith@example.com", 987654);
+        userService.save(user2);
+
+        User user3 = new User("Admin User", Roles.ADMIN, "adminpassword", "admin@example.com", 55555);
+        userService.save(user3);
+
+
 
 
 

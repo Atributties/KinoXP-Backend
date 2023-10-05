@@ -31,4 +31,11 @@ public class EnumController {
         List<String> ageLimits = enumService.getAllAgeLimits();
         return new ResponseEntity<>(ageLimits, HttpStatus.OK);
     }
+
+    @GetMapping("/roles")
+    public ResponseEntity<List<String>> getAllRoles() {
+        List<String> roles = enumService.getAllRoles();
+        return new ResponseEntity<>(roles, HttpStatus.OK);
+    }
 }
+

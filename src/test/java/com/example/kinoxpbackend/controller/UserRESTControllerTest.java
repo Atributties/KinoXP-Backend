@@ -43,13 +43,13 @@ class UserRESTControllerTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"user1", "user2", "user3", "user4", "user5"})
-    public void testGetUserByUsername(String userName) {
+    public void testGetUserByUsername(String email) {
         // Arrange
         User expectedUser = new User();
-        when(userService.findByUsername(userName)).thenReturn(expectedUser);
+        when(userService.findByEmail(email)).thenReturn(expectedUser);
 
         // Act
-        ResponseEntity<User> response = userRESTController.getUserByUserName(userName);
+        ResponseEntity<User> response = userRESTController.getUserByEmail(email);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -74,12 +74,12 @@ class UserRESTControllerTest {
     // Test login
     @ParameterizedTest
     @ValueSource(strings = {"user1", "user2", "user3", "user4", "user5"})
-    public void testUserLogin(String userName) {
+    public void testUserLogin(String email) {
         // Arrange
         User expectedUser = new User();
-        expectedUser.setUsername(userName);
+        expectedUser.setEmail(email);
         expectedUser.setPassword("password123");
-        when(userService.findByUsername(userName)).thenReturn(expectedUser);
+        when(userService.findByEmail(email)).thenReturn(expectedUser);
 
         // Act
         ResponseEntity<User> response = userRESTController.userLogin(expectedUser);
@@ -91,12 +91,12 @@ class UserRESTControllerTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"user1", "user2", "user3", "user4", "user5"})
-    public void testUserLoginNotFound(String userName) {
+    public void testUserLoginNotFound(String email) {
         // Arrange
         User expectedUser = new User();
-        expectedUser.setUsername(userName);
+        expectedUser.setEmail(email);
         expectedUser.setPassword("password123");
-        when(userService.findByUsername(userName)).thenReturn(null);
+        when(userService.findByEmail(email)).thenReturn(null);
 
         // Act
         ResponseEntity<User> response = userRESTController.userLogin(expectedUser);
@@ -107,16 +107,16 @@ class UserRESTControllerTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"user1", "user2", "user3", "user4", "user5"})
-    public void testUserLoginInvalidPassword(String userName) {
+    public void testUserLoginInvalidPassword(String email) {
         // Arrange
         User expectedUser = new User();
-        expectedUser.setUsername(userName);
+        expectedUser.setEmail(email);
         expectedUser.setPassword("correctPassword");  // Pass a different password here
-        when(userService.findByUsername(userName)).thenReturn(expectedUser);
+        when(userService.findByEmail(email)).thenReturn(expectedUser);
 
         // Act
         ResponseEntity<User> response = userRESTController.userLogin(
-                new User(expectedUser.getUsername(), "wrongPassword")  // Pass a wrong password here
+                new User(expectedUser.getEmail(), "wrongPassword")  // Pass a wrong password here
         );
 
         // Assert
@@ -125,10 +125,10 @@ class UserRESTControllerTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"user1", "user2", "user3", "user4", "user5"})
-    public void testCreateUser(String userName) {
+    public void testCreateUser(String email) {
         // Arrange
         User expectedUser = new User();
-        expectedUser.setUsername(userName);
+        expectedUser.setEmail(email);
         expectedUser.setPassword("password123");
         when(userService.save(expectedUser)).thenReturn(expectedUser);
 
@@ -143,13 +143,12 @@ class UserRESTControllerTest {
     //test create user 2
     @ParameterizedTest
     @ValueSource(strings = {"user1", "user2", "user3", "user4", "user5"})
-    public void testCreateUser2(String userName) {
+    public void testCreateUser2(String email) {
         // Arrange
         User expectedUser = new User();
-        expectedUser.setUsername(userName);
+        expectedUser.setEmail(email);
         expectedUser.setPassword("password123");
         expectedUser.setRole(Roles.ADMIN);
-        expectedUser.setEmail("admin@email.com");
         expectedUser.setPhoneNumber(55783456);
         expectedUser.setName("Kurt");
         when(userService.save(expectedUser)).thenReturn(expectedUser);
@@ -169,10 +168,10 @@ class UserRESTControllerTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"user1", "user2", "user3", "user4", "user5"})
-    public void testCreateUserNull(String userName) {
+    public void testCreateUserNull(String email) {
         // Arrange
         User expectedUser = new User();
-        expectedUser.setUsername(userName);
+        expectedUser.setEmail(email);
         expectedUser.setPassword("password123");
         when(userService.save(expectedUser)).thenReturn(null);
 
@@ -186,15 +185,15 @@ class UserRESTControllerTest {
     // Test to get the role of a user
     @ParameterizedTest
     @ValueSource(strings = {"user1", "user2", "user3", "user4", "user5"})
-    public void testGetUserRole(String userName) {
+    public void testGetUserRole(String email) {
         // Arrange
         User expectedUser = new User();
-        expectedUser.setUsername(userName);
+        expectedUser.setEmail(email);
         expectedUser.setRole(Roles.CUSTOMER);  // Set the expected role for the user
-        when(userService.findByUsername(userName)).thenReturn(expectedUser);
+        when(userService.findByEmail(email)).thenReturn(expectedUser);
 
         // Act
-        ResponseEntity<Roles> response = userRESTController.getUserRole(userName);
+        ResponseEntity<Roles> response = userRESTController.getUserRole(email);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -203,15 +202,15 @@ class UserRESTControllerTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"user1", "user2", "user3", "user4", "user5"})
-    public void testGetUserRole2(String userName){
+    public void testGetUserRole2(String email){
         // Arrange
         User expectedUser = new User();
-        expectedUser.setUsername(userName);
+        expectedUser.setEmail(email);
         expectedUser.setRole(Roles.ADMIN);
-        when(userService.findByUsername(userName)).thenReturn(expectedUser);
+        when(userService.findByEmail(email)).thenReturn(expectedUser);
 
         // Act
-        ResponseEntity<Roles> response = userRESTController.getUserRole(userName);
+        ResponseEntity<Roles> response = userRESTController.getUserRole(email);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -220,15 +219,15 @@ class UserRESTControllerTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"user1", "user2", "user3", "user4", "user5"})
-    public void testGetWrongUserRole(String userName){
+    public void testGetWrongUserRole(String email){
         // Arrange
         User expectedUser = new User();
-        expectedUser.setUsername(userName);
+        expectedUser.setEmail(email);
         expectedUser.setRole(Roles.ADMIN);
-        when(userService.findByUsername(userName)).thenReturn(expectedUser);
+        when(userService.findByEmail(email)).thenReturn(expectedUser);
 
         // Act
-        ResponseEntity<Roles> response = userRESTController.getUserRole(userName);
+        ResponseEntity<Roles> response = userRESTController.getUserRole(email);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -237,12 +236,12 @@ class UserRESTControllerTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"user1", "user2", "user3", "user4", "user5"})
-    public void testGetUserRoleNotFound(String userName) {
+    public void testGetUserRoleNotFound(String email) {
         // Arrange
-        when(userService.findByUsername(userName)).thenReturn(null);
+        when(userService.findByEmail(email)).thenReturn(null);
 
         // Act
-        ResponseEntity<Roles> response = userRESTController.getUserRole(userName);
+        ResponseEntity<Roles> response = userRESTController.getUserRole(email);
 
         // Assert
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());

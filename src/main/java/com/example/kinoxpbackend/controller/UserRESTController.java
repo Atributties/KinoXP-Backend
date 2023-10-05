@@ -14,15 +14,30 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/user")
 public class UserRESTController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("/login")
+
+    @GetMapping("/user")
+    public List<User> getUsers() {
+        return userService.findAll();
+    }
+
+    @PostMapping("/user")
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        User createdUser = userService.save(user);
+        if (createdUser != null) {
+            return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/user/login")
     public ResponseEntity<User> userLogin(@RequestBody User loginDetails) {
-        User user = userService.findByUsername(loginDetails.getUsername());
+        User user = userService.findByEmail(loginDetails.getEmail());
         if (user != null) {
             if (user.getPassword().equals(loginDetails.getPassword())) {
                 return ResponseEntity.ok(user);
@@ -35,19 +50,11 @@ public class UserRESTController {
     }
 
 
-    @PostMapping("/create")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        User createdUser = userService.save(user);
-        if (createdUser != null) {
-            return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
-    @GetMapping("/{userName}")
-    public ResponseEntity<User> getUserByUserName(@RequestBody String userName) {
-        User user = userService.findByUsername(userName);
+
+    @GetMapping("/user/email/{email}")
+    public ResponseEntity<User> getUserByEmail(@RequestBody String email) {
+        User user = userService.findByEmail(email);
         if (user != null) {
             return new ResponseEntity<>(user, HttpStatus.OK);
         } else {
@@ -55,7 +62,7 @@ public class UserRESTController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/user/{id}")
     public ResponseEntity<User> getUserById(int id) {
         Optional<User> user = Optional.ofNullable(userService.findById(id));
         if(user.isPresent()) {
@@ -65,9 +72,9 @@ public class UserRESTController {
         }
     }
 
-    @GetMapping("/role/{userName}")
-    public ResponseEntity<Roles> getUserRole(@PathVariable String userName) {
-        User user = userService.findByUsername(userName);
+    @GetMapping("/user/role/{email}")
+    public ResponseEntity<Roles> getUserRole(@PathVariable String email) {
+        User user = userService.findByEmail(email);
 
         if (user != null) {
             Roles role = user.getRole();
