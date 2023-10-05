@@ -1,9 +1,7 @@
 package com.example.kinoxpbackend.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import com.example.kinoxpbackend.enums.Roles;
+import jakarta.persistence.*;
 
 @Entity
 public class User {
@@ -11,7 +9,8 @@ public class User {
 
 
     private String name;
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Roles role;
     private String username;
     private String password;
     @Id
@@ -22,6 +21,23 @@ public class User {
     @OneToOne(mappedBy = "user")
     private Reservation reservation;
 
+    public User() {
+    }
+
+    public User(String name, Roles role, String username, String password, String email, int phoneNumber) {
+        this.name = name;
+        this.role = role;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public String getName() {
         return name;
     }
@@ -30,11 +46,11 @@ public class User {
         this.name = name;
     }
 
-    public String getRole() {
+    public Roles getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Roles role) {
         this.role = role;
     }
 
