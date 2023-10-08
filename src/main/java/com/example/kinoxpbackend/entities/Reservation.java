@@ -13,7 +13,7 @@ public class Reservation {
 
 
     @OneToOne
-    @JoinColumn(name = "user", referencedColumnName = "email")
+    @JoinColumn(name = "user", referencedColumnName = "id")
     private User user;
 
 

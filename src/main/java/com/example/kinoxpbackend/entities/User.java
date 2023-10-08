@@ -9,11 +9,13 @@ public class User {
 
 
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String name;
     @Enumerated(EnumType.STRING)
     private Roles role;
     private String password;
-    @Id
     private String email;
     private String phoneNumber;
 
@@ -30,6 +32,14 @@ public class User {
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public User(String email, String password) {
