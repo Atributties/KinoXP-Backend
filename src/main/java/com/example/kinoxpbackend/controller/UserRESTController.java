@@ -34,6 +34,26 @@ public class UserRESTController {
             return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
         }
     }
+    @PostMapping("/user/login")
+    public ResponseEntity<String> userLogin(@RequestBody User loginDetails, HttpSession session) {
+        User user = userService.findByEmail(loginDetails.getEmail());
+
+        if (user != null && user.getPassword().equals(loginDetails.getPassword())) {
+            // Store the user ID in the session to indicate that the user is logged in
+            session.setAttribute("userId", user.getEmail());
+            return ResponseEntity.ok("Login successful");
+        } else {
+            return ResponseEntity.badRequest().body("Invalid username or password");
+        }
+    }
+
+    // Implement a logout endpoint if needed
+    @PostMapping("/user/logout")
+    public ResponseEntity<String> userLogout(HttpSession session) {
+        session.invalidate(); // Invalidate the session to log the user out
+        return ResponseEntity.ok("Logged out successfully");
+    }
+
 
 
     @GetMapping("/user/email/{email}")
