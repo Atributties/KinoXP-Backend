@@ -34,4 +34,8 @@ public class UserService {
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
+    public User validateUser(String email, String password) {
+        return userRepository.findByEmailAndPassword(email, password);
+    }
 }
