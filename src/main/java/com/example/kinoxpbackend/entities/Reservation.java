@@ -1,7 +1,10 @@
 package com.example.kinoxpbackend.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Reservation {
@@ -14,12 +17,28 @@ public class Reservation {
 
     @OneToOne
     @JoinColumn(name = "user", referencedColumnName = "id")
+    @JsonBackReference
     private User user;
 
     @OneToOne
     @JoinColumn(name = "showtime", referencedColumnName = "id")
+    @JsonBackReference
     private Showtime showtime;
 
+    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<SeatReservation> seatReservations;
+
+
+    public Reservation() {
+    }
+
+    public Reservation(User user, Showtime showtime, List<SeatReservation> seatReservations) {
+        this.user = user;
+        this.showtime = showtime;
+        this.seatReservations = seatReservations;
+
+    }
 
 
     public int getId() {
@@ -46,10 +65,11 @@ public class Reservation {
         this.showtime = showtime;
     }
 
-    //List of reserved seats numbers
-    //Additional items maybe
+    public List<SeatReservation> getSeatReservations() {
+        return seatReservations;
+    }
 
-
-
-
+    public void setSeatReservations(List<SeatReservation> seatReservations) {
+        this.seatReservations = seatReservations;
+    }
 }

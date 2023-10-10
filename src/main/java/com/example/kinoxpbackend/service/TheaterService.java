@@ -2,6 +2,7 @@ package com.example.kinoxpbackend.service;
 
 
 import com.example.kinoxpbackend.entities.Theater;
+import com.example.kinoxpbackend.enums.TheaterName;
 import com.example.kinoxpbackend.repositories.TheaterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,5 +19,9 @@ public class TheaterService {
 
     public void save(Theater theater) {
         theaterRepository.save(theater);
+    }
+
+    public Theater findByTheaterName(TheaterName theaterName) {
+        return theaterRepository.findByTheaterName(theaterName);
     }
 }

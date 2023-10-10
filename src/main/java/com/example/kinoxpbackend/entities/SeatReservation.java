@@ -1,25 +1,22 @@
 package com.example.kinoxpbackend.entities;
 
-
-import com.example.kinoxpbackend.enums.SeatStatus;
+import com.example.kinoxpbackend.entities.Reservation;
 import jakarta.persistence.*;
-
 @Entity
-public class Seat {
+public class SeatReservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @ManyToOne
+    @JoinColumn(name = "reservation", referencedColumnName = "id")
+    private Reservation reservation;
+
     private String oneRow;
     private int seatNumber;
-    @Enumerated(EnumType.STRING)
-    private SeatStatus status;
 
-    @ManyToOne
-    @JoinColumn(name = "theater", referencedColumnName = "id")
-    private Theater theater;     // Reference til det tilknyttede teater
-
+    // Andre egenskaber og metoder
 
     public int getId() {
         return id;
@@ -27,6 +24,14 @@ public class Seat {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
     }
 
     public String getOneRow() {
@@ -43,22 +48,6 @@ public class Seat {
 
     public void setSeatNumber(int seatNumber) {
         this.seatNumber = seatNumber;
-    }
-
-    public SeatStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(SeatStatus status) {
-        this.status = status;
-    }
-
-    public Theater getTheater() {
-        return theater;
-    }
-
-    public void setTheater(Theater theater) {
-        this.theater = theater;
     }
 
 }

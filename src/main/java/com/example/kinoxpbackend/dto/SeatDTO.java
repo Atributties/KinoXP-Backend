@@ -1,25 +1,26 @@
-package com.example.kinoxpbackend.entities;
+package com.example.kinoxpbackend.dto;
 
-
+import com.example.kinoxpbackend.entities.Seat;
+import com.example.kinoxpbackend.entities.Theater;
 import com.example.kinoxpbackend.enums.SeatStatus;
-import jakarta.persistence.*;
 
-@Entity
-public class Seat {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class SeatDTO {
+
     private int id;
-
     private String oneRow;
     private int seatNumber;
-    @Enumerated(EnumType.STRING)
     private SeatStatus status;
+    private Theater theater;
 
-    @ManyToOne
-    @JoinColumn(name = "theater", referencedColumnName = "id")
-    private Theater theater;     // Reference til det tilknyttede teater
 
+    public SeatDTO(Seat seat) {
+        this.id = seat.getId();
+        this.oneRow = seat.getOneRow();
+        this.seatNumber = seat.getSeatNumber();
+        this.status = seat.getStatus();
+        this.theater = seat.getTheater();
+    }
 
     public int getId() {
         return id;
@@ -60,5 +61,4 @@ public class Seat {
     public void setTheater(Theater theater) {
         this.theater = theater;
     }
-
 }

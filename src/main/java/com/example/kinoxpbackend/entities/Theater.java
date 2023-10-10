@@ -13,9 +13,10 @@ public class Theater {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Enumerated(EnumType.STRING)
-    private TheaterName name;
-    private static final int NUM_ROWS = 10; // Antal rækker
-    private static final int NUM_SEATS_PER_ROW = 20; // Antal sæder pr. række
+    private TheaterName theaterName;
+    private int numRows = 0; // Antal rækker
+    private int numSeatsPrRow = 0; // Antal sæder pr. række
+
 
 
     @OneToOne(mappedBy = "theater")
@@ -36,7 +37,7 @@ public class Theater {
     public Theater() {
     }
     public Theater(TheaterName theaterName) {
-        this.name = TheaterName.valueOf(theaterName.name()); // Navnet fra enum
+        this.theaterName = TheaterName.valueOf(theaterName.name()); // Navnet fra enum
     }
 
     public int getId() {
@@ -55,11 +56,27 @@ public class Theater {
         this.showtime = showtime;
     }
 
-    public TheaterName getName() {
-        return name;
+    public TheaterName getTheaterName() {
+        return theaterName;
     }
 
-    public void setName(TheaterName name) {
-        this.name = name;
+    public void setTheaterName(TheaterName theaterName) {
+        this.theaterName = theaterName;
+    }
+
+    public int getNumRows() {
+        return numRows;
+    }
+
+    public int getNumSeatsPrRow() {
+        return numSeatsPrRow;
+    }
+
+    public void setNumRows(int numRows) {
+        this.numRows = numRows;
+    }
+
+    public void setNumSeatsPrRow(int numSeatsPrRow) {
+        this.numSeatsPrRow = numSeatsPrRow;
     }
 }
