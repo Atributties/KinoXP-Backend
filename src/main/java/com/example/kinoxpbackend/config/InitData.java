@@ -1,17 +1,12 @@
 package com.example.kinoxpbackend.config;
 
 
-import com.example.kinoxpbackend.entities.Movie;
-import com.example.kinoxpbackend.entities.Reservation;
-import com.example.kinoxpbackend.entities.Showtime;
-import com.example.kinoxpbackend.entities.User;
+import com.example.kinoxpbackend.entities.*;
 import com.example.kinoxpbackend.enums.AgeLimit;
 import com.example.kinoxpbackend.enums.MovieCategories;
 import com.example.kinoxpbackend.enums.Roles;
-import com.example.kinoxpbackend.service.MovieService;
-import com.example.kinoxpbackend.service.ReservationService;
-import com.example.kinoxpbackend.service.ShowtimeService;
-import com.example.kinoxpbackend.service.UserService;
+import com.example.kinoxpbackend.enums.TheaterName;
+import com.example.kinoxpbackend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -32,6 +27,8 @@ public class InitData implements CommandLineRunner {
     ReservationService reservationService;
     @Autowired
     ShowtimeService showtimeService;
+    @Autowired
+    TheaterService theaterService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -65,7 +62,6 @@ public class InitData implements CommandLineRunner {
         movieService.save(movie1);
         movieService.save(movie2);
         movieService.save(movie3);
-
 
 
         // Create and save user entities using the UserService
@@ -102,11 +98,14 @@ public class InitData implements CommandLineRunner {
         reservationService.save(reservation1);
         reservationService.save(reservation2);
 
+        // Iterer gennem teaternavne og opret teaterobjekter
+        for (TheaterName theaterName : TheaterName.values()) {
+            Theater theater = new Theater(theaterName);
+            // Indstil andre teateroplysninger efter behov
+            theaterService.save(theater);
 
-
+        }
 
     }
-
-
 
 }
