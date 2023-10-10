@@ -1,16 +1,19 @@
 package com.example.kinoxpbackend.config;
 
 
-import com.example.kinoxpbackend.entities.Movie;
-import com.example.kinoxpbackend.entities.User;
+import com.example.kinoxpbackend.entities.*;
 import com.example.kinoxpbackend.enums.AgeLimit;
 import com.example.kinoxpbackend.enums.MovieCategories;
 import com.example.kinoxpbackend.enums.Roles;
-import com.example.kinoxpbackend.service.MovieService;
-import com.example.kinoxpbackend.service.UserService;
+import com.example.kinoxpbackend.enums.TheaterName;
+import com.example.kinoxpbackend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Component
 public class InitData implements CommandLineRunner {
@@ -20,9 +23,33 @@ public class InitData implements CommandLineRunner {
     MovieService movieService;
     @Autowired
     UserService userService;
+    @Autowired
+    ReservationService reservationService;
+    @Autowired
+    ShowtimeService showtimeService;
+    @Autowired
+    TheaterService theaterService;
+    @Autowired
+    SeatService seatService;
+    @Autowired
+    SeatReservationService seatReservationService;
 
     @Override
     public void run(String... args) throws Exception {
+
+        Theater largeTheater = new Theater(TheaterName.THEATER_LARGE);
+        largeTheater.setNumRows(15);
+        largeTheater.setNumSeatsPrRow(20);
+
+        theaterService.save(largeTheater);
+        seatService.initializeSeatsForTheater(largeTheater);
+
+        Theater smallTheater = new Theater(TheaterName.THEATER_SMALL);
+        smallTheater.setNumRows(8);
+        smallTheater.setNumSeatsPrRow(15);
+
+        theaterService.save(smallTheater);
+        seatService.initializeSeatsForTheater(smallTheater);
 
         // Create and save movie entities using the MovieService
         Movie movie1 = new Movie();
@@ -55,7 +82,6 @@ public class InitData implements CommandLineRunner {
         movieService.save(movie3);
 
 
-
         // Create and save user entities using the UserService
         User user1 = new User("John Doe", Roles.CUSTOMER, "password123", "johndoe@example.com", "123456");
         userService.save(user1);
@@ -66,12 +92,60 @@ public class InitData implements CommandLineRunner {
         User user3 = new User("Admin User", Roles.ADMIN, "adminpassword", "admin@example.com", "23232323");
         userService.save(user3);
 
+        // Retrieve Theater entities based on TheaterName
+        Theater theater1 = theaterService.findByTheaterName(TheaterName.THEATER_LARGE);
+        Theater theater2 = theaterService.findByTheaterName(TheaterName.THEATER_SMALL);
 
+        Showtime showtime1 = new Showtime();
+        showtime1.setDate(LocalDate.of(2023, 10, 15));
+        showtime1.setTime(LocalTime.of(15, 0));
+        showtime1.setTheater(theater1);
+        showtime1.setMovie(movie1);
+        showtimeService.save(showtime1);
+
+        Showtime showtime2 = new Showtime();
+        showtime2.setDate(LocalDate.of(2023, 10, 15));
+        showtime2.setTime(LocalTime.of(15, 0));
+        showtime2.setTheater(theater2);
+        showtime2.setMovie(movie2);
+        showtimeService.save(showtime2);
+        //Create and save reservation entities using the ReservationService
+        // Create and save reservation entities using the ReservationService
+        Reservation reservation1 = new Reservation();
+        reservation1.setUser(user1);
+        reservation1.setShowtime(showtime1);
+
+        reservationService.save(reservation1);
+
+
+        SeatReservation seatReservation1 = new SeatReservation();
+        seatReservation1.setReservation(reservation1);
+        seatReservation1.setOneRow("A");
+        seatReservation1.setSeatNumber(1);
+
+        seatReservationService.saveSeatReservation(seatReservation1);
+
+        SeatReservation seatReservation2 = new SeatReservation();
+        seatReservation2.setReservation(reservation1);
+        seatReservation2.setOneRow("A");
+        seatReservation2.setSeatNumber(2);
+// Set other seat reservation properties as needed
+        seatReservationService.saveSeatReservation(seatReservation2);
+
+// Save reservations to the database
+        reservationService.save(reservation1);
+
+        Reservation reservation2 = new Reservation();
+        reservation2.setUser(user2);
+        reservation2.setShowtime(showtime2);
+        // Set other reservation properties as needed
+
+        // Save reservations to the database
+        reservationService.save(reservation1);
+        reservationService.save(reservation2);
 
 
 
     }
-
-
 
 }

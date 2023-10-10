@@ -1,45 +1,82 @@
 package com.example.kinoxpbackend.entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import com.example.kinoxpbackend.enums.TheaterName;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Theater {
 
     @Id
-    private String name;
-    private int numberOfRows;
-    private int seatsPrRow;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Enumerated(EnumType.STRING)
+    private TheaterName theaterName;
+    private int numRows = 0; // Antal rækker
+    private int numSeatsPrRow = 0; // Antal sæder pr. række
 
 
 
     @OneToOne(mappedBy = "theater")
-    private Reservation reservation;
+    private Showtime showtime;
 
-    public String getName() {
-        return name;
+    @OneToMany(mappedBy = "theater", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Seat> seats;
+
+
+    public List<Seat> getSeats() {
+        return seats;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSeats(List<Seat> seats) {
+        this.seats = seats;
     }
 
-    public int getRows() {
-        return numberOfRows;
+    public Theater() {
+    }
+    public Theater(TheaterName theaterName) {
+        this.theaterName = TheaterName.valueOf(theaterName.name()); // Navnet fra enum
     }
 
-    public void setRows(int numberOfRows) {
-        this.numberOfRows = numberOfRows;
+    public int getId() {
+        return id;
     }
 
-    public int getSeatsPrRow() {
-        return seatsPrRow;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setSeatsPrRow(int seatsPrRow) {
-        this.seatsPrRow = seatsPrRow;
+    public Showtime getShowtime() {
+        return showtime;
+    }
+
+    public void setShowtime(Showtime showtime) {
+        this.showtime = showtime;
+    }
+
+    public TheaterName getTheaterName() {
+        return theaterName;
+    }
+
+    public void setTheaterName(TheaterName theaterName) {
+        this.theaterName = theaterName;
+    }
+
+    public int getNumRows() {
+        return numRows;
+    }
+
+    public int getNumSeatsPrRow() {
+        return numSeatsPrRow;
+    }
+
+    public void setNumRows(int numRows) {
+        this.numRows = numRows;
+    }
+
+    public void setNumSeatsPrRow(int numSeatsPrRow) {
+        this.numSeatsPrRow = numSeatsPrRow;
     }
 }

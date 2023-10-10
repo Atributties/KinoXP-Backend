@@ -15,8 +15,7 @@ public class Showtime {
     private int id;
     private LocalDate date;
     private LocalTime time;
-    //Movie object
-    //Theater object
+
 
 
     @ManyToOne
@@ -27,6 +26,26 @@ public class Showtime {
     @OneToOne(mappedBy = "showtime")
     private Reservation reservation;
 
+    @OneToOne
+    @JoinColumn(name = "theater", referencedColumnName = "id")
+    private Theater theater;
+
+
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
+    }
+
+    public Theater getTheater() {
+        return theater;
+    }
+
+    public void setTheater(Theater theater) {
+        this.theater = theater;
+    }
 
     public int getId() {
         return id;
