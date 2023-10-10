@@ -21,4 +21,7 @@ public class ReservationService {
         return reservationRepository.findReservationById(id);
     }
 
+    public Reservation save(Reservation reservation) {
+        return reservationRepository.save(reservation);
+    }
 }

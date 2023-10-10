@@ -16,23 +16,35 @@ public class Reservation {
     @JoinColumn(name = "user", referencedColumnName = "id")
     private User user;
 
-
-    //Drop
-    @OneToOne
-    @JoinColumn(name = "movie", referencedColumnName = "id")
-    private Movie movie;
-
-
     @OneToOne
     @JoinColumn(name = "showtime", referencedColumnName = "id")
     private Showtime showtime;
 
 
-    //Drop
-    @OneToOne
-    @JoinColumn(name = "theater", referencedColumnName = "name")
-    private Theater theater;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Showtime getShowtime() {
+        return showtime;
+    }
+
+    public void setShowtime(Showtime showtime) {
+        this.showtime = showtime;
+    }
 
     //List of reserved seats numbers
     //Additional items maybe

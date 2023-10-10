@@ -31,10 +31,6 @@ public class Movie {
     @JsonBackReference
     private Set<Showtime> showtimes = new HashSet<>();
 
-
-    @OneToOne(mappedBy = "movie")
-    private Reservation reservation;
-
     public Movie() {
     }
     public Movie(int id, String title) {
@@ -58,14 +54,6 @@ public class Movie {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-    }
-
-    public Reservation getReservation() {
-        return reservation;
-    }
-
-    public void setReservation(Reservation reservation) {
-        this.reservation = reservation;
     }
 
     public Set<Showtime> getShowtimes() {

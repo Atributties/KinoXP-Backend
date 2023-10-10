@@ -27,6 +27,9 @@ public class Showtime {
     @OneToOne(mappedBy = "showtime")
     private Reservation reservation;
 
+    @OneToOne
+    @JoinColumn(name = "theater", referencedColumnName = "name")
+    private Theater theater;
 
     public int getId() {
         return id;

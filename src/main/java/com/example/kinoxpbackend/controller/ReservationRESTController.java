@@ -20,5 +20,14 @@ public class ReservationRESTController {
         List<Reservation> reservations = reservationService.getReservationsById(id);
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
+    @PostMapping
+    public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
+        Reservation createdReservation = reservationService.save(reservation);
+        if (createdReservation != null) {
+            return new ResponseEntity<>(createdReservation, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }

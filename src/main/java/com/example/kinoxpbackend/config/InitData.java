@@ -2,15 +2,23 @@ package com.example.kinoxpbackend.config;
 
 
 import com.example.kinoxpbackend.entities.Movie;
+import com.example.kinoxpbackend.entities.Reservation;
+import com.example.kinoxpbackend.entities.Showtime;
 import com.example.kinoxpbackend.entities.User;
 import com.example.kinoxpbackend.enums.AgeLimit;
 import com.example.kinoxpbackend.enums.MovieCategories;
 import com.example.kinoxpbackend.enums.Roles;
 import com.example.kinoxpbackend.service.MovieService;
+import com.example.kinoxpbackend.service.ReservationService;
+import com.example.kinoxpbackend.service.ShowtimeService;
 import com.example.kinoxpbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Component
 public class InitData implements CommandLineRunner {
@@ -20,6 +28,10 @@ public class InitData implements CommandLineRunner {
     MovieService movieService;
     @Autowired
     UserService userService;
+    @Autowired
+    ReservationService reservationService;
+    @Autowired
+    ShowtimeService showtimeService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -66,6 +78,29 @@ public class InitData implements CommandLineRunner {
         User user3 = new User("Admin User", Roles.ADMIN, "adminpassword", "admin@example.com", "23232323");
         userService.save(user3);
 
+        Showtime showtime1 = new Showtime();
+        showtime1.setDate(LocalDate.of(2023, 10, 15)); // Replace with the actual date
+        showtime1.setTime(LocalTime.of(15, 0)); // Replace with the actual time
+        showtimeService.save(showtime1);
+
+        Showtime showtime2 = new Showtime();
+        showtime2.setDate(LocalDate.of(2023, 10, 15)); // Replace with the actual date
+        showtime2.setTime(LocalTime.of(15, 0)); // Replace with the actual time
+        showtimeService.save(showtime2);
+        //Create and save reservation entities using the ReservationService
+        Reservation reservation1 = new Reservation();
+        reservation1.setUser(user1);
+        reservation1.setShowtime(showtime1);
+        // Set other reservation properties as needed
+
+        Reservation reservation2 = new Reservation();
+        reservation2.setUser(user2);
+        reservation2.setShowtime(showtime2);
+        // Set other reservation properties as needed
+
+        // Save reservations to the database
+        reservationService.save(reservation1);
+        reservationService.save(reservation2);
 
 
 

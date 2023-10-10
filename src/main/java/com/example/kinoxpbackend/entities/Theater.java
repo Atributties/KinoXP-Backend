@@ -13,11 +13,8 @@ public class Theater {
     private int numberOfRows;
     private int seatsPrRow;
 
-
-
-
     @OneToOne(mappedBy = "theater")
-    private Reservation reservation;
+    private Showtime showtime;
 
     public String getName() {
         return name;
