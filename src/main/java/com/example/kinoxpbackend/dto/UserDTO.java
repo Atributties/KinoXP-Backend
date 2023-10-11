@@ -22,7 +22,12 @@ public class UserDTO {
         this.password = user.getPassword();
         this.email = user.getEmail();
         this.phoneNumber = user.getPhoneNumber();
-        this.reservation = new ReservationDTO(user.getReservation());
+        // Check if the user has a reservation
+        if (user.getReservation() != null) {
+            this.reservation = new ReservationDTO(user.getReservation());
+        } else {
+            this.reservation = null;
+        }
 
     }
 

@@ -22,7 +22,7 @@ public class User {
     private String phoneNumber;
 
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
     @JsonBackReference
     private Reservation reservation;
 

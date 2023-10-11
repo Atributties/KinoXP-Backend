@@ -31,4 +31,8 @@ public class LoginSessionService {
     public User validateUser(String email, String password) {
         return userRepository.findByEmailAndPassword(email, password);
     }
+
+    public Optional<User> findById(int id) {
+        return userRepository.findById(id);
+    }
 }

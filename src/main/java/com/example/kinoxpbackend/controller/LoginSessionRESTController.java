@@ -29,13 +29,20 @@ public class LoginSessionRESTController {
         HttpSession session = request.getSession(false);
 
         if (session != null) {
-            // Retrieve the user object from the session (adjust the attribute name as needed)
-            String email = (String) session.getAttribute("username");
-            Optional<User> user = loginSessionService.findByEmail(email);
+            // Retrieve the user's id from the session
+            Integer userId = (Integer) session.getAttribute("userId");
+            System.out.println("user from session: " + userId.intValue());
 
-            if (user.isPresent()) {
-                UserDTO userDTO = new UserDTO(user.get()); // Include ReservationDTO
-                return new ResponseEntity<>(userDTO, HttpStatus.OK);
+            if (userId != null) {
+                Optional<User> user = loginSessionService.findById(userId);
+                System.out.println("user from session: " + userId.intValue());
+                System.out.println("Id from user: " + user.get().getId());
+                System.out.println("reservation: " + user.get().getReservation());
+
+                if (user.isPresent()) {
+                    UserDTO userDTO = new UserDTO(user.get()); // Include ReservationDTO
+                    return new ResponseEntity<>(userDTO, HttpStatus.OK);
+                }
             }
         }
 
@@ -44,16 +51,17 @@ public class LoginSessionRESTController {
     }
 
 
-    @PostMapping(value = "/session/login", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/session/login")
     public ResponseEntity<String> login(@RequestBody User user, HttpServletRequest request) {
         User user1 = loginSessionService.validateUser(user.getEmail(), user.getPassword());
+
         if (user1 != null) {
             HttpSession session = request.getSession();
-            // Store data in the session
-            session.setAttribute("username", user1.getEmail());
-            System.out.println("Username: " + user1.getEmail());
-            String username = (String) session.getAttribute("username");
-            System.out.println("Session name: " + username);
+            // Store user id in the session
+            session.setAttribute("userId", user1.getId()); // Save user ID instead of email
+            System.out.println("User ID: " + user1.getId());
+            int userId = (int) session.getAttribute("userId");
+            System.out.println("Session user ID: " + userId);
 
             return ResponseEntity.ok("Login successful");
         } else {
@@ -61,6 +69,7 @@ public class LoginSessionRESTController {
             return ResponseEntity.badRequest().body("Invalid credentials");
         }
     }
+
 
     // Implement a logout endpoint if needed
     @GetMapping("/session/logout")
