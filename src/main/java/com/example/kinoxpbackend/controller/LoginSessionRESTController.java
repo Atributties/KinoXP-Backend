@@ -52,23 +52,17 @@ public class LoginSessionRESTController {
 
 
     @PostMapping(value = "/session/login")
-    public ResponseEntity<String> login(@RequestBody User user, HttpServletRequest request) {
-        User user1 = loginSessionService.validateUser(user.getEmail(), user.getPassword());
+    public ResponseEntity<UserDTO> login(@RequestBody User user) {
+        User authenticatedUser = loginSessionService.validateUser(user.getEmail(), user.getPassword());
 
-        if (user1 != null) {
-            HttpSession session = request.getSession();
-            // Store user id in the session
-            session.setAttribute("userId", user1.getId()); // Save user ID instead of email
-            System.out.println("User ID: " + user1.getId());
-            int userId = (int) session.getAttribute("userId");
-            System.out.println("Session user ID: " + userId);
-
-            return ResponseEntity.ok("Login successful");
+        if (authenticatedUser != null) {
+            UserDTO userDTO = new UserDTO(authenticatedUser); // Include ReservationDTO
+            return ResponseEntity.ok(userDTO);
         } else {
-            System.out.println("Invalid credentials");
-            return ResponseEntity.badRequest().body("Invalid credentials");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
+
 
 
     // Implement a logout endpoint if needed
