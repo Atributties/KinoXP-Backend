@@ -6,16 +6,16 @@ import com.example.kinoxpbackend.entities.SeatReservation;
 public class SeatReservationDTO {
 
     private int id;
-    private Reservation reservation;
     private String oneRow;
     private int seatNumber;
+    private Reservation reservation;
 
 
     public SeatReservationDTO(SeatReservation seatReservation) {
         this.id = seatReservation.getId();
-        this.reservation = seatReservation.getReservation();
         this.oneRow = seatReservation.getOneRow();
         this.seatNumber = seatReservation.getSeatNumber();
+        this.reservation = seatReservation.getReservation();
     }
 
     public int getId() {

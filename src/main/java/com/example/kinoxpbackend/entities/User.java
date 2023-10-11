@@ -1,6 +1,8 @@
 package com.example.kinoxpbackend.entities;
 
 import com.example.kinoxpbackend.enums.Roles;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
@@ -21,6 +23,7 @@ public class User {
 
 
     @OneToOne(mappedBy = "user")
+    @JsonBackReference
     private Reservation reservation;
 
     public User() {
@@ -85,5 +88,13 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
     }
 }

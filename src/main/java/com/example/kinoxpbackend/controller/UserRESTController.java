@@ -1,6 +1,9 @@
 package com.example.kinoxpbackend.controller;
 
+import com.example.kinoxpbackend.dto.ReservationDTO;
+import com.example.kinoxpbackend.dto.UserDTO;
 import com.example.kinoxpbackend.entities.Movie;
+import com.example.kinoxpbackend.entities.Reservation;
 import com.example.kinoxpbackend.entities.User;
 import com.example.kinoxpbackend.enums.Roles;
 import com.example.kinoxpbackend.service.UserService;
@@ -8,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +30,17 @@ public class UserRESTController {
         return userService.findAll();
     }
 
+    @GetMapping("/user/{id}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable int id) {
+        Optional<User> user = userService.findById(id);
+        if (user.isPresent()) {
+            UserDTO userDTO = new UserDTO(user.get()); // Include ReservationDTO
+            return new ResponseEntity<>(userDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping("/user")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         User createdUser = userService.save(user);
@@ -36,76 +51,46 @@ public class UserRESTController {
         }
     }
 
-    @PostMapping("/user/login")
-    public ResponseEntity<String> login(@RequestBody User user, HttpServletRequest request) {
-        // Validate the user credentials here (e.g., check against a database)
-        // For simplicity, let's assume you have a UserService to perform user validation
-        User user1 = userService.validateUser(user.getEmail(), user.getPassword());
-        if (user1 != null) {
-            HttpSession session = request.getSession();
-            // Store data in the session
-            session.setAttribute("username", user.getEmail());
-            System.out.println("Username: " + user.getEmail());
-            String username = (String) session.getAttribute("username");
-            System.out.println("Session name: " + username);
-
-            return ResponseEntity.ok("Login successful");
+    @PutMapping("/user/{id}")
+    public ResponseEntity<User> putUser(@PathVariable int id, @RequestBody User user) {
+        Optional<User> orgUser = userService.findById(id);
+        if(orgUser.isPresent()) {
+            user.setId(id);
+            userService.save(user);
+            return ResponseEntity.ok(user);
         } else {
-            System.out.println("Invalid credentials");
-            return ResponseEntity.badRequest().body("Invalid credentials");
+            return ResponseEntity.notFound().build();
         }
     }
 
-    // Implement a logout endpoint if needed
 
-    @GetMapping("/user/logout")
-    public ResponseEntity<String> logout(HttpServletRequest request) {
-        HttpSession session = request.getSession(false); // Get the existing session if it exists
-
-        if (session != null) {
-            session.invalidate(); // Invalidate the session (log out the user)
-            System.out.println("Logout of session succes");
-            return ResponseEntity.ok("Logout successful");
-        } else {
-            System.out.println("Logout not good");
-            // If there's no active session, you can return an error response
-            return ResponseEntity.badRequest().body("No active session to log out from");
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable int id){
+        Optional<User> orgUser = userService.findById(id);
+        if(orgUser.isPresent()) {
+            userService.deleteById(id);
+            return ResponseEntity.ok("User deleted");
+        }else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
     }
+
 
 
 
     @GetMapping("/user/email/{email}")
-    public ResponseEntity<User> getUserByEmail(@RequestBody String email) {
-        User user = userService.findByEmail(email);
-        if (user != null) {
-            return new ResponseEntity<>(user, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-    }
+    public ResponseEntity<UserDTO> getUserByEmail(@PathVariable String email) {
+        Optional<User> user = userService.findByEmail(email);
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Integer id) {
-        Optional<User> user = Optional.ofNullable(userService.findById(id));
         if (user.isPresent()) {
-            return new ResponseEntity<>(user.get(), HttpStatus.OK);
+            UserDTO userDTO = new UserDTO(user.get()); // Include ReservationDTO
+            return new ResponseEntity<>(userDTO, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
 
-    @GetMapping("/user/role/{email}")
-    public ResponseEntity<Roles> getUserRole(@PathVariable String email) {
-        User user = userService.findByEmail(email);
 
-        if (user != null) {
-            Roles role = user.getRole();
-            return new ResponseEntity<>(role, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-    }
 
 
 }

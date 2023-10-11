@@ -1,6 +1,7 @@
 package com.example.kinoxpbackend.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -24,6 +25,7 @@ public class Showtime {
 
 
     @OneToOne(mappedBy = "showtime")
+    @JsonManagedReference(value="showtimeReference")
     private Reservation reservation;
 
     @OneToOne
