@@ -92,58 +92,17 @@ public class InitData implements CommandLineRunner {
         User user3 = new User("Admin User", Roles.ADMIN, "adminpassword", "admin@example.com", "23232323");
         userService.save(user3);
 
-        // Retrieve Theater entities based on TheaterName
-        Theater theater1 = theaterService.findByTheaterName(TheaterName.THEATER_LARGE);
-        Theater theater2 = theaterService.findByTheaterName(TheaterName.THEATER_SMALL);
-
-        Showtime showtime1 = new Showtime();
-        showtime1.setDate(LocalDate.of(2023, 10, 15));
-        showtime1.setTime(LocalTime.of(15, 0));
-        showtime1.setTheater(theater1);
-        showtime1.setMovie(movie1);
+        //create a showtime for movie 1
+        Showtime showtime1 = new Showtime(LocalDate.of(2021, 5, 20), LocalTime.of(20, 0), movie1, null);
         showtimeService.save(showtime1);
-
-        Showtime showtime2 = new Showtime();
-        showtime2.setDate(LocalDate.of(2023, 10, 15));
-        showtime2.setTime(LocalTime.of(15, 0));
-        showtime2.setTheater(theater2);
-        showtime2.setMovie(movie2);
+        Showtime showtime2 = new Showtime(LocalDate.of(2023, 7, 21), LocalTime.of(20, 0), movie1, null);
         showtimeService.save(showtime2);
-        //Create and save reservation entities using the ReservationService
-        // Create and save reservation entities using the ReservationService
-        Reservation reservation1 = new Reservation();
-        reservation1.setUser(user1);
-        reservation1.setShowtime(showtime1);
-
-        reservationService.save(reservation1);
-
-
-        SeatReservation seatReservation1 = new SeatReservation();
-        seatReservation1.setReservation(reservation1);
-        seatReservation1.setOneRow("A");
-        seatReservation1.setSeatNumber(1);
-
-        seatReservationService.saveSeatReservation(seatReservation1);
-
-        SeatReservation seatReservation2 = new SeatReservation();
-        seatReservation2.setReservation(reservation1);
-        seatReservation2.setOneRow("A");
-        seatReservation2.setSeatNumber(2);
-// Set other seat reservation properties as needed
-        seatReservationService.saveSeatReservation(seatReservation2);
-
-// Save reservations to the database
-        reservationService.save(reservation1);
-
-        Reservation reservation2 = new Reservation();
-        reservation2.setUser(user2);
-        reservation2.setShowtime(showtime2);
-        // Set other reservation properties as needed
-
-        // Save reservations to the database
-        reservationService.save(reservation1);
-        reservationService.save(reservation2);
-
+        Showtime showtime3 = new Showtime(LocalDate.of(2023, 8, 15), LocalTime.of(20, 0), movie1, null);
+        showtimeService.save(showtime3);
+        Showtime showtime4 = new Showtime(LocalDate.of(2024, 1, 20), LocalTime.of(20, 0), movie2, null);
+        showtimeService.save(showtime4);
+        Showtime showtime5 = new Showtime(LocalDate.of(2024, 2, 10), LocalTime.of(20, 0), movie3, null);
+        showtimeService.save(showtime5);
 
 
     }

@@ -33,6 +33,16 @@ public class Showtime {
     private Theater theater;
 
 
+    public Showtime() {
+    }
+
+    public Showtime(LocalDate date, LocalTime time, Movie movie, Theater theater) {
+        this.date = date;
+        this.time = time;
+        this.movie = movie;
+        this.theater = theater;
+    }
+
     public Reservation getReservation() {
         return reservation;
     }

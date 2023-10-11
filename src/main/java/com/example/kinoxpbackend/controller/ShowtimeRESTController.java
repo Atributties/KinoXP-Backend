@@ -19,9 +19,15 @@ public class ShowtimeRESTController {
 
     @GetMapping("/movie/{movieId}")
     public ResponseEntity<List<Showtime>> getShowtimesByMovie(@PathVariable int movieId) {
-        List<Showtime> showtimes = showtimeService.findByMovieId(movieId);
-        return new ResponseEntity<>(showtimes, HttpStatus.OK);
+        try {
+            List<Showtime> showtimes = showtimeService.findByMovieId(movieId);
+            return new ResponseEntity<>(showtimes, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace(); // Log the exception
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
 
     @PostMapping
     public ResponseEntity<Showtime> createShowtime(@RequestBody Showtime showtime) {
@@ -32,8 +38,6 @@ public class ShowtimeRESTController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
 
 }
 
