@@ -8,23 +8,21 @@ import java.util.List;
 
 @Entity
 public class Theater {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @Enumerated(EnumType.STRING)
     private TheaterName theaterName;
+
     private int numRows = 0; // Antal rækker
     private int numSeatsPrRow = 0; // Antal sæder pr. række
 
-
-
-    @OneToOne(mappedBy = "theater")
-    private Showtime showtime;
+    @OneToMany(mappedBy = "theater", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Showtime> showtimes;
 
     @OneToMany(mappedBy = "theater", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Seat> seats;
-
 
     public List<Seat> getSeats() {
         return seats;
@@ -40,20 +38,12 @@ public class Theater {
         this.theaterName = TheaterName.valueOf(theaterName.name()); // Navnet fra enum
     }
 
-    public int getId() {
-        return id;
+    public List<Showtime> getShowtimes() {
+        return showtimes;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Showtime getShowtime() {
-        return showtime;
-    }
-
-    public void setShowtime(Showtime showtime) {
-        this.showtime = showtime;
+    public void setShowtimes(List<Showtime> showtimes) {
+        this.showtimes = showtimes;
     }
 
     public TheaterName getTheaterName() {
@@ -79,4 +69,5 @@ public class Theater {
     public void setNumSeatsPrRow(int numSeatsPrRow) {
         this.numSeatsPrRow = numSeatsPrRow;
     }
+
 }

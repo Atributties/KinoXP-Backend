@@ -1,11 +1,13 @@
 package com.example.kinoxpbackend.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 public class Showtime {
@@ -28,9 +30,12 @@ public class Showtime {
     @JsonManagedReference(value="showtimeReference")
     private Reservation reservation;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "theater", referencedColumnName = "id")
     private Theater theater;
+
+    @OneToMany(mappedBy = "showtime", fetch = FetchType.LAZY)
+    private List<Seat> seats;
 
 
     public Showtime() {
@@ -41,6 +46,23 @@ public class Showtime {
         this.time = time;
         this.movie = movie;
         this.theater = theater;
+    }
+
+    public Showtime(LocalDate date, LocalTime time, Movie movie, Reservation reservation, Theater theater, List<Seat> seats) {
+        this.date = date;
+        this.time = time;
+        this.movie = movie;
+        this.reservation = reservation;
+        this.theater = theater;
+        this.seats = seats;
+    }
+
+    public List<Seat> getSeats() {
+        return seats;
+    }
+
+    public void setSeats(List<Seat> seats) {
+        this.seats = seats;
     }
 
     public Reservation getReservation() {

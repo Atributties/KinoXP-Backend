@@ -1,8 +1,11 @@
 package com.example.kinoxpbackend.dto;
 
 import com.example.kinoxpbackend.entities.Seat;
+import com.example.kinoxpbackend.entities.Showtime;
 import com.example.kinoxpbackend.entities.Theater;
 import com.example.kinoxpbackend.enums.SeatStatus;
+
+import java.util.List;
 
 
 public class SeatDTO {
@@ -11,15 +14,16 @@ public class SeatDTO {
     private String oneRow;
     private int seatNumber;
     private SeatStatus status;
-    private Theater theater;
 
+
+    public SeatDTO() {
+    }
 
     public SeatDTO(Seat seat) {
         this.id = seat.getId();
         this.oneRow = seat.getOneRow();
         this.seatNumber = seat.getSeatNumber();
         this.status = seat.getStatus();
-        this.theater = seat.getTheater();
     }
 
     public int getId() {
@@ -54,11 +58,5 @@ public class SeatDTO {
         this.status = status;
     }
 
-    public Theater getTheater() {
-        return theater;
-    }
 
-    public void setTheater(Theater theater) {
-        this.theater = theater;
-    }
 }

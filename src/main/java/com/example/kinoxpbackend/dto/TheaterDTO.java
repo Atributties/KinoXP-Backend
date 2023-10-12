@@ -15,16 +15,15 @@ public class TheaterDTO {
     private TheaterName theaterName;
     private int numRows = 0; // Antal rækker
     private int numSeatsPrRow = 0; // Antal sæder pr. række
-    private Showtime showtime;
+    private List<Showtime> showtime;
     private List<Seat> seats;
 
 
     public TheaterDTO(Theater theater) {
-        this.id = theater.getId();
         this.theaterName = theater.getTheaterName();
         this.numRows = theater.getNumRows();
         this.numSeatsPrRow = theater.getNumSeatsPrRow();
-        this.showtime = theater.getShowtime();
+        this.showtime = theater.getShowtimes();
         this.seats = theater.getSeats();
     }
 
@@ -60,11 +59,11 @@ public class TheaterDTO {
         this.numSeatsPrRow = numSeatsPrRow;
     }
 
-    public Showtime getShowtime() {
+    public List<Showtime> getShowtime() {
         return showtime;
     }
 
-    public void setShowtime(Showtime showtime) {
+    public void setShowtime(List<Showtime> showtime) {
         this.showtime = showtime;
     }
 
@@ -75,4 +74,6 @@ public class TheaterDTO {
     public void setSeats(List<Seat> seats) {
         this.seats = seats;
     }
+
+
 }

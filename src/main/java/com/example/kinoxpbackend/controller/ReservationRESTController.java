@@ -34,7 +34,7 @@ public class ReservationRESTController {
     }
 
 
-    @PostMapping
+    @PostMapping("/reservation")
     public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
         Reservation createdReservation = reservationService.save(reservation);
         if (createdReservation != null) {

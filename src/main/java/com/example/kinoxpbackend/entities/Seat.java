@@ -20,6 +20,29 @@ public class Seat {
     @JoinColumn(name = "theater", referencedColumnName = "id")
     private Theater theater;     // Reference til det tilknyttede teater
 
+    @ManyToOne
+    @JoinColumn(name = "showtime_id")
+    private Showtime showtime;
+
+
+    public Seat() {
+    }
+
+    public Seat(String oneRow, int seatNumber, SeatStatus status, Theater theater, Showtime showtime) {
+        this.oneRow = oneRow;
+        this.seatNumber = seatNumber;
+        this.status = status;
+        this.theater = theater;
+        this.showtime = showtime;
+    }
+
+    public Showtime getShowtime() {
+        return showtime;
+    }
+
+    public void setShowtime(Showtime showtime) {
+        this.showtime = showtime;
+    }
 
     public int getId() {
         return id;

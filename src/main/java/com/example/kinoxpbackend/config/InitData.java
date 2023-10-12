@@ -1,6 +1,7 @@
 package com.example.kinoxpbackend.config;
 
 
+import com.example.kinoxpbackend.dto.ShowtimeDTO;
 import com.example.kinoxpbackend.entities.*;
 import com.example.kinoxpbackend.enums.AgeLimit;
 import com.example.kinoxpbackend.enums.MovieCategories;
@@ -40,16 +41,14 @@ public class InitData implements CommandLineRunner {
         Theater largeTheater = new Theater(TheaterName.THEATER_LARGE);
         largeTheater.setNumRows(15);
         largeTheater.setNumSeatsPrRow(20);
-
         theaterService.save(largeTheater);
-        seatService.initializeSeatsForTheater(largeTheater);
 
         Theater smallTheater = new Theater(TheaterName.THEATER_SMALL);
         smallTheater.setNumRows(8);
         smallTheater.setNumSeatsPrRow(15);
 
         theaterService.save(smallTheater);
-        seatService.initializeSeatsForTheater(smallTheater);
+
 
         // Create and save movie entities using the MovieService
         Movie movie1 = new Movie();
@@ -93,16 +92,21 @@ public class InitData implements CommandLineRunner {
         userService.save(user3);
 
         //create a showtime for movie 1
-        Showtime showtime1 = new Showtime(LocalDate.of(2021, 5, 20), LocalTime.of(20, 0), movie1, null);
+        Showtime showtime1 = new Showtime(LocalDate.of(2021, 5, 20), LocalTime.of(20, 0), movie1, largeTheater);
         showtimeService.save(showtime1);
-        Showtime showtime2 = new Showtime(LocalDate.of(2023, 7, 21), LocalTime.of(20, 0), movie1, null);
+        showtimeService.initializeSeatsForShowtime(largeTheater, showtime1);
+
+        Showtime showtime2 = new Showtime(LocalDate.of(2023, 7, 21), LocalTime.of(20, 0), movie1, largeTheater);
         showtimeService.save(showtime2);
-        Showtime showtime3 = new Showtime(LocalDate.of(2023, 8, 15), LocalTime.of(20, 0), movie1, null);
-        showtimeService.save(showtime3);
-        Showtime showtime4 = new Showtime(LocalDate.of(2024, 1, 20), LocalTime.of(20, 0), movie2, null);
+        showtimeService.initializeSeatsForShowtime(largeTheater, showtime2);
+
+        Showtime showtime4 = new Showtime(LocalDate.of(2024, 1, 20), LocalTime.of(20, 0), movie2, smallTheater);
         showtimeService.save(showtime4);
-        Showtime showtime5 = new Showtime(LocalDate.of(2024, 2, 10), LocalTime.of(20, 0), movie3, null);
+        showtimeService.initializeSeatsForShowtime(smallTheater, showtime4);
+
+        Showtime showtime5 = new Showtime(LocalDate.of(2024, 2, 10), LocalTime.of(20, 0), movie3, smallTheater);
         showtimeService.save(showtime5);
+        showtimeService.initializeSeatsForShowtime(smallTheater, showtime5);
 
 
     }
