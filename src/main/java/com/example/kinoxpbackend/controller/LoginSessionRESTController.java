@@ -37,7 +37,7 @@ public class LoginSessionRESTController {
                 Optional<User> user = loginSessionService.findById(userId);
                 System.out.println("user from session: " + userId.intValue());
                 System.out.println("Id from user: " + user.get().getId());
-                System.out.println("reservation: " + user.get().getReservation());
+                System.out.println("reservation: " + user.get().getReservations());
 
                 if (user.isPresent()) {
                     UserDTO userDTO = new UserDTO(user.get()); // Include ReservationDTO

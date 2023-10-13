@@ -15,13 +15,12 @@ public class Reservation {
     private int id;
 
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user", referencedColumnName = "id")
     private User user;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "showtime", referencedColumnName = "id")
-    @JsonBackReference(value="showtimeReference")
     private Showtime showtime;
 
     @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL)

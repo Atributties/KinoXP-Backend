@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.antlr.v4.runtime.misc.NotNull;
 
+import java.util.List;
+
 @Entity
 public class User {
 
@@ -22,9 +24,8 @@ public class User {
     private String phoneNumber;
 
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
-    @JsonBackReference
-    private Reservation reservation;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Reservation> reservations;
 
     public User() {
     }
@@ -35,6 +36,10 @@ public class User {
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
+    }
+
+    public User(int id) {
+        this.id = id;
     }
 
     public int getId() {
@@ -90,11 +95,11 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public Reservation getReservation() {
-        return reservation;
+    public List<Reservation> getReservations() {
+        return reservations;
     }
 
-    public void setReservation(Reservation reservation) {
-        this.reservation = reservation;
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
 }

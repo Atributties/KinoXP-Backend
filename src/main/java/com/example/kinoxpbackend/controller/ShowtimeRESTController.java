@@ -2,6 +2,7 @@ package com.example.kinoxpbackend.controller;
 
 import com.example.kinoxpbackend.dto.ShowtimeDTO;
 import com.example.kinoxpbackend.entities.Showtime;
+import com.example.kinoxpbackend.entities.Theater;
 import com.example.kinoxpbackend.service.ShowtimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,9 +54,6 @@ public class ShowtimeRESTController {
     }
 
 
-
-
-
     @GetMapping("/showtime/movie/{movieId}")
     public ResponseEntity<List<ShowtimeDTO>> getShowtimesByMovie(@PathVariable int movieId) {
         try {
@@ -75,11 +73,17 @@ public class ShowtimeRESTController {
 
     @PostMapping("/showtime")
     public ResponseEntity<Showtime> createShowtime(@RequestBody Showtime showtime) {
-        showtimeService.initializeSeatsForShowtime(showtime.getTheater(), showtime);
-        Showtime createdShowtime = showtimeService.save(showtime);
-        if (createdShowtime != null) {
-            return new ResponseEntity<>(createdShowtime, HttpStatus.CREATED);
-        } else {
+        Theater theater = showtimeService.getTheaterById(showtime.getTheater().getId());
+        try {
+            Showtime createdShowtime = showtimeService.save(showtime);
+            if (createdShowtime != null) {
+                showtimeService.initializeSeatsForShowtime(theater, showtime);
+                return new ResponseEntity<>(createdShowtime, HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

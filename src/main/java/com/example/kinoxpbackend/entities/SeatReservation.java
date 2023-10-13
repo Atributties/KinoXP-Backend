@@ -19,6 +19,17 @@ public class SeatReservation {
     private String oneRow;
     private int seatNumber;
 
+    public SeatReservation() {
+    }
+
+    public SeatReservation(Reservation reservation, String oneRow, int seatNumber) {
+        this.reservation = reservation;
+        this.oneRow = oneRow;
+        this.seatNumber = seatNumber;
+    }
+
+
+
     // Andre egenskaber og metoder
 
     public int getId() {
