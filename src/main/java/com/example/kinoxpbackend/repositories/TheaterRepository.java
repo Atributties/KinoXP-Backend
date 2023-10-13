@@ -10,4 +10,6 @@ public interface TheaterRepository extends JpaRepository<Theater, Integer> {
 
 
     Theater findByTheaterName(TheaterName theaterName);
+
+    Theater findTheaterById(int id);
 }

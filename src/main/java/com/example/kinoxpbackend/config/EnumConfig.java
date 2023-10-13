@@ -3,6 +3,7 @@ package com.example.kinoxpbackend.config;
 import com.example.kinoxpbackend.enums.AgeLimit;
 import com.example.kinoxpbackend.enums.MovieCategories;
 import com.example.kinoxpbackend.enums.Roles;
+import com.example.kinoxpbackend.enums.TheaterName;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -22,5 +23,10 @@ public class EnumConfig {
     @Bean
     public Roles[] roles() {
         return Roles.values();
+    }
+
+    @Bean
+    public TheaterName[] theaterNames() {
+        return TheaterName.values();
     }
 }

@@ -37,5 +37,11 @@ public class EnumController {
         List<String> roles = enumService.getAllRoles();
         return new ResponseEntity<>(roles, HttpStatus.OK);
     }
+
+    @GetMapping("/theaterName")
+    public ResponseEntity<List<String>> getAllTheater() {
+        List<String> roles = enumService.getAllTheater();
+        return new ResponseEntity<>(roles, HttpStatus.OK);
+    }
 }
 
