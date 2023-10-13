@@ -26,9 +26,8 @@ public class Showtime {
     private Movie movie;
 
 
-    @OneToOne(mappedBy = "showtime")
-    @JsonManagedReference(value="showtimeReference")
-    private Reservation reservation;
+    @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL)
+    private List<Reservation> reservations;
 
     @ManyToOne
     @JoinColumn(name = "theater", referencedColumnName = "id")
@@ -48,13 +47,18 @@ public class Showtime {
         this.theater = theater;
     }
 
-    public Showtime(LocalDate date, LocalTime time, Movie movie, Reservation reservation, Theater theater, List<Seat> seats) {
+    public Showtime(LocalDate date, LocalTime time, Movie movie, List<Reservation> reservation, Theater theater, List<Seat> seats) {
         this.date = date;
         this.time = time;
         this.movie = movie;
-        this.reservation = reservation;
+        this.reservations = reservation;
         this.theater = theater;
         this.seats = seats;
+    }
+
+    public Showtime(int id) {
+        this.id = id;
+
     }
 
     public List<Seat> getSeats() {
@@ -65,12 +69,12 @@ public class Showtime {
         this.seats = seats;
     }
 
-    public Reservation getReservation() {
-        return reservation;
+    public List<Reservation> getReservations() {
+        return reservations;
     }
 
-    public void setReservation(Reservation reservation) {
-        this.reservation = reservation;
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
 
     public Theater getTheater() {

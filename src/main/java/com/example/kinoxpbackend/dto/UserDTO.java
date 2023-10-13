@@ -22,14 +22,15 @@ public class UserDTO {
         this.password = user.getPassword();
         this.email = user.getEmail();
         this.phoneNumber = user.getPhoneNumber();
-        // Check if the user has a reservation
-        if (user.getReservation() != null) {
-            this.reservation = new ReservationDTO(user.getReservation());
+
+        // Check if the user has reservations and if the list is not empty
+        if (user.getReservations() != null && !user.getReservations().isEmpty()) {
+            this.reservation = new ReservationDTO(user.getReservations().get(0));
         } else {
             this.reservation = null;
         }
-
     }
+
 
     public UserDTO (String email, String password) {
         this.email = email;

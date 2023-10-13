@@ -37,4 +37,13 @@ public class SeatService {
         }
         return seatRepository.saveAll(seats);
     }
+
+
+    public Seat getSeatById(int id) {
+        return seatRepository.getReferenceById(id);
+    }
+
+    public void save(Seat seat) {
+        seatRepository.save(seat);
+    }
 }
