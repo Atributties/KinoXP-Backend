@@ -2,6 +2,7 @@ package com.example.kinoxpbackend.service;
 
 
 import com.example.kinoxpbackend.entities.Movie;
+import com.example.kinoxpbackend.exceptions.MovieNotFoundException;
 import com.example.kinoxpbackend.repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,12 +21,20 @@ public class MovieService {
     }
 
     public List<Movie> findAllByTitleContaining(String title) {
-        return movieRepository.findAllByTitleContaining(title);
+        List<Movie> movies = movieRepository.findAllByTitleContaining(title);
+        if (movies.isEmpty()) {
+            throw new MovieNotFoundException("No movies found with the title containing: " + title);
+        }
+        return movies;
     }
 
 
     public List<Movie> findAll() {
-        return movieRepository.findAll();
+        List<Movie> movies = movieRepository.findAll();
+        if (movies.isEmpty()) {
+            throw new MovieNotFoundException("No movies found.");
+        }
+        return movies;
     }
 
     public Movie save(Movie movie) {
@@ -41,10 +50,18 @@ public class MovieService {
     }
 
     public List<Movie> findAllByCategory(String category) {
-        return movieRepository.findAllByCategoryIgnoreCase(category);
+        List<Movie> movies = movieRepository.findAllByCategoryIgnoreCase(category);
+        if (movies.isEmpty()) {
+            throw new MovieNotFoundException("No movies found in the category: " + category);
+        }
+        return movies;
     }
 
     public List<Movie> findAllByAgeLimitIgnoreCase(String ageLimit) {
-        return movieRepository.findAllByAgeLimitIgnoreCase(ageLimit);
+        List<Movie> movies = movieRepository.findAllByAgeLimitIgnoreCase(ageLimit);
+        if (movies.isEmpty()) {
+            throw new MovieNotFoundException("No movies found for the age limit: " + ageLimit);
+        }
+        return movies;
     }
 }

@@ -5,6 +5,7 @@ import com.example.kinoxpbackend.entities.Seat;
 import com.example.kinoxpbackend.entities.Showtime;
 import com.example.kinoxpbackend.entities.Theater;
 import com.example.kinoxpbackend.enums.SeatStatus;
+import com.example.kinoxpbackend.exceptions.SeatNotFoundException;
 import com.example.kinoxpbackend.repositories.SeatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +41,11 @@ public class SeatService {
 
 
     public Seat getSeatById(int id) {
-        return seatRepository.getReferenceById(id);
+        Seat seat = seatRepository.getReferenceById(id);
+        if(seat == null){
+            throw new SeatNotFoundException("Seat Not found");
+        }
+        return seat;
     }
 
     public void save(Seat seat) {

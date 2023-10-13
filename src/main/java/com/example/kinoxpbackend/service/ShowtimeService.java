@@ -3,6 +3,7 @@ package com.example.kinoxpbackend.service;
 import com.example.kinoxpbackend.entities.Seat;
 import com.example.kinoxpbackend.entities.Showtime;
 import com.example.kinoxpbackend.entities.Theater;
+import com.example.kinoxpbackend.exceptions.ShowtimesNotFoundException;
 import com.example.kinoxpbackend.repositories.ShowtimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,13 +36,19 @@ public class ShowtimeService {
     }
 
     public List<Showtime> findByMovieId(int movieId) {
-        return showtimeRepository.findByMovieId(movieId);
+        List<Showtime> showtimes = showtimeRepository.findByMovieId(movieId);
+        if (showtimes == null || showtimes.isEmpty()) {
+            throw new ShowtimesNotFoundException("No showtimes found for movie with ID: " + movieId);
+        }
+        return showtimes;
     }
-
     public List<Showtime> getAllShowtimes() {
-        return showtimeRepository.findAll();
+        List<Showtime> showtimes = showtimeRepository.findAll();
+        if (showtimes == null || showtimes.isEmpty()) {
+            throw new ShowtimesNotFoundException("No showtimes found.");
+        }
+        return showtimes;
     }
-
     public Showtime getShowtimeById(int id) {
         return showtimeRepository.getReferenceById(id);
     }
