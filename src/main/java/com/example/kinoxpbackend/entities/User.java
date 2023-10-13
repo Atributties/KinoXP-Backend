@@ -1,21 +1,59 @@
 package com.example.kinoxpbackend.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.example.kinoxpbackend.enums.Roles;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
+
+import java.util.List;
 
 @Entity
 public class User {
 
 
 
-    private String name;
-    private String role;
-    private String username;
-    private String password;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String name;
+    @Enumerated(EnumType.STRING)
+    private Roles role;
+    private String password;
     private String email;
-    private int phoneNumber;
+    private String phoneNumber;
 
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Reservation> reservations;
+
+    public User() {
+    }
+
+    public User(String name, Roles role, String password, String email, String phoneNumber) {
+        this.name = name;
+        this.role = role;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public User(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 
     public String getName() {
         return name;
@@ -25,20 +63,12 @@ public class User {
         this.name = name;
     }
 
-    public String getRole() {
+    public Roles getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Roles role) {
         this.role = role;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
@@ -57,11 +87,19 @@ public class User {
         this.email = email;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
 }

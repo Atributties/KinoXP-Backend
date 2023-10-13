@@ -1,10 +1,13 @@
 package com.example.kinoxpbackend.entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.kinoxpbackend.enums.AgeLimit;
+import com.example.kinoxpbackend.enums.MovieCategories;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Movie {
@@ -14,13 +17,52 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String title;
-    private String category;
-    private int ageLimit;
+    @Enumerated(EnumType.STRING) // Use EnumType.STRING to store enum values as strings in the database
+    private MovieCategories category;
+    @Enumerated(EnumType.STRING)
+    private AgeLimit ageLimit;
     private Double duration;
     private String description;
+    private String imageUrl;
 
 
 
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
+    private Set<Showtime> showtimes = new HashSet<>();
+
+    public Movie() {
+    }
+    public Movie(int id, String title) {
+        this.id = id;
+        this.title = title;
+    }
+
+    public Movie(String title, String imageUrl, MovieCategories category, AgeLimit ageLimit, Double duration, String description) {
+        this.title = title;
+        this.imageUrl = imageUrl;
+        this.category = category;
+        this.ageLimit = ageLimit;
+        this.duration = duration;
+        this.description = description;
+    }
+
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Set<Showtime> getShowtimes() {
+        return showtimes;
+    }
+
+    public void setShowtimes(Set<Showtime> showtimes) {
+        this.showtimes = showtimes;
+    }
 
     public int getId() {
         return id;
@@ -38,19 +80,19 @@ public class Movie {
         this.title = title;
     }
 
-    public String getCategory() {
+    public MovieCategories getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(MovieCategories category) {
         this.category = category;
     }
 
-    public int getAgeLimit() {
+    public AgeLimit getAgeLimit() {
         return ageLimit;
     }
 
-    public void setAgeLimit(int ageLimit) {
+    public void setAgeLimit(AgeLimit ageLimit) {
         this.ageLimit = ageLimit;
     }
 
