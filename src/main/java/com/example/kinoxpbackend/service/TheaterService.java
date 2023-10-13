@@ -7,6 +7,8 @@ import com.example.kinoxpbackend.repositories.TheaterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TheaterService {
 
@@ -21,7 +23,17 @@ public class TheaterService {
         theaterRepository.save(theater);
     }
 
-    public Theater findByTheaterName(TheaterName theaterName) {
-        return theaterRepository.findByTheaterName(theaterName);
+    public Theater findByTheaterName(String theaterName) {
+        return theaterRepository.findByTheaterName(TheaterName.valueOf(theaterName));
+    }
+
+
+
+    public List<Theater> getAllTheater() {
+        return theaterRepository.findAll();
+    }
+
+    public Theater findTheaterById(int id) {
+        return theaterRepository.findTheaterById(id);
     }
 }

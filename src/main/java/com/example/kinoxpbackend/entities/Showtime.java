@@ -1,10 +1,13 @@
 package com.example.kinoxpbackend.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 public class Showtime {
@@ -23,20 +26,55 @@ public class Showtime {
     private Movie movie;
 
 
-    @OneToOne(mappedBy = "showtime")
-    private Reservation reservation;
+    @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL)
+    private List<Reservation> reservations;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "theater", referencedColumnName = "id")
     private Theater theater;
 
+    @OneToMany(mappedBy = "showtime", fetch = FetchType.LAZY)
+    private List<Seat> seats;
 
-    public Reservation getReservation() {
-        return reservation;
+
+    public Showtime() {
     }
 
-    public void setReservation(Reservation reservation) {
-        this.reservation = reservation;
+    public Showtime(LocalDate date, LocalTime time, Movie movie, Theater theater) {
+        this.date = date;
+        this.time = time;
+        this.movie = movie;
+        this.theater = theater;
+    }
+
+    public Showtime(LocalDate date, LocalTime time, Movie movie, List<Reservation> reservation, Theater theater, List<Seat> seats) {
+        this.date = date;
+        this.time = time;
+        this.movie = movie;
+        this.reservations = reservation;
+        this.theater = theater;
+        this.seats = seats;
+    }
+
+    public Showtime(int id) {
+        this.id = id;
+
+    }
+
+    public List<Seat> getSeats() {
+        return seats;
+    }
+
+    public void setSeats(List<Seat> seats) {
+        this.seats = seats;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
 
     public Theater getTheater() {

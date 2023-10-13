@@ -1,5 +1,6 @@
 package com.example.kinoxpbackend.controller;
 
+import com.example.kinoxpbackend.dto.ShowtimeDTO;
 import com.example.kinoxpbackend.entities.Movie;
 import com.example.kinoxpbackend.entities.Showtime;
 import com.example.kinoxpbackend.service.ShowtimeService;
@@ -17,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -51,11 +53,11 @@ class ShowtimeRESTControllerTest {
         when(showtimeService.findByMovieId(id)).thenReturn(expectedShowtimes);
 
         // Act
-        ResponseEntity<List<Showtime>> response = showtimeRESTController.getShowtimesByMovie(id);
+        ResponseEntity<List<ShowtimeDTO>> response = showtimeRESTController.getShowtimesByMovie(id);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertTrue(response.getBody() == expectedShowtimes);
+        assertTrue(Objects.equals(response.getBody(), expectedShowtimes));
     }
 
     @ParameterizedTest

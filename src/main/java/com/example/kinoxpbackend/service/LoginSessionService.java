@@ -1,6 +1,7 @@
 package com.example.kinoxpbackend.service;
 
 
+import com.example.kinoxpbackend.dto.UserDTO;
 import com.example.kinoxpbackend.entities.User;
 import com.example.kinoxpbackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,17 +10,17 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class SessionHandleService {
+public class LoginSessionService {
 
     private final UserRepository userRepository;
 
     @Autowired
-    public SessionHandleService(UserRepository userRepository) {
+    public LoginSessionService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
 
-    public User findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
@@ -29,5 +30,9 @@ public class SessionHandleService {
 
     public User validateUser(String email, String password) {
         return userRepository.findByEmailAndPassword(email, password);
+    }
+
+    public Optional<User> findById(int id) {
+        return userRepository.findById(id);
     }
 }

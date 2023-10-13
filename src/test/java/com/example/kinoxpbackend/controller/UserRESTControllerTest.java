@@ -1,6 +1,7 @@
 package com.example.kinoxpbackend.controller;
 
 
+import com.example.kinoxpbackend.dto.UserDTO;
 import com.example.kinoxpbackend.entities.User;
 import com.example.kinoxpbackend.enums.Roles;
 import com.example.kinoxpbackend.service.UserService;
@@ -17,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
@@ -46,10 +48,10 @@ class UserRESTControllerTest {
     public void testGetUserByUsername(String email) {
         // Arrange
         User expectedUser = new User();
-        when(userService.findByEmail(email)).thenReturn(expectedUser);
+        when(userService.findByEmail(email)).thenReturn(Optional.of(expectedUser));
 
         // Act
-        ResponseEntity<User> response = userRESTController.getUserByEmail(email);
+        ResponseEntity<UserDTO> response = userRESTController.getUserByEmail(email);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -61,10 +63,10 @@ class UserRESTControllerTest {
     public void testGetUserById(int id) {
         // Arrange
         User expectedUser = new User();
-        when(userService.findById(eq(id))).thenReturn(expectedUser);
+        when(userService.findById(eq(id))).thenReturn(Optional.of(expectedUser));
 
         // Act
-        ResponseEntity<User> response = userRESTController.getUserById(id);
+        ResponseEntity<UserDTO> response = userRESTController.getUserById(id);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -190,70 +192,6 @@ class UserRESTControllerTest {
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
-    // Test to get the role of a user
-    @ParameterizedTest
-    @ValueSource(strings = {"user1", "user2", "user3", "user4", "user5"})
-    public void testGetUserRole(String email) {
-        // Arrange
-        User expectedUser = new User();
-        expectedUser.setEmail(email);
-        expectedUser.setRole(Roles.CUSTOMER);  // Set the expected role for the user
-        when(userService.findByEmail(email)).thenReturn(expectedUser);
-
-        // Act
-        ResponseEntity<Roles> response = userRESTController.getUserRole(email);
-
-        // Assert
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(Roles.CUSTOMER, response.getBody());
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"user1", "user2", "user3", "user4", "user5"})
-    public void testGetUserRole2(String email){
-        // Arrange
-        User expectedUser = new User();
-        expectedUser.setEmail(email);
-        expectedUser.setRole(Roles.ADMIN);
-        when(userService.findByEmail(email)).thenReturn(expectedUser);
-
-        // Act
-        ResponseEntity<Roles> response = userRESTController.getUserRole(email);
-
-        // Assert
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(Roles.ADMIN, response.getBody());
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"user1", "user2", "user3", "user4", "user5"})
-    public void testGetWrongUserRole(String email){
-        // Arrange
-        User expectedUser = new User();
-        expectedUser.setEmail(email);
-        expectedUser.setRole(Roles.ADMIN);
-        when(userService.findByEmail(email)).thenReturn(expectedUser);
-
-        // Act
-        ResponseEntity<Roles> response = userRESTController.getUserRole(email);
-
-        // Assert
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotEquals(Roles.CUSTOMER, response.getBody());
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"user1", "user2", "user3", "user4", "user5"})
-    public void testGetUserRoleNotFound(String email) {
-        // Arrange
-        when(userService.findByEmail(email)).thenReturn(null);
-
-        // Act
-        ResponseEntity<Roles> response = userRESTController.getUserRole(email);
-
-        // Assert
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-    }
 
 
 

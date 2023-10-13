@@ -1,12 +1,12 @@
 package com.example.kinoxpbackend.service;
 
 import com.example.kinoxpbackend.entities.User;
-import com.example.kinoxpbackend.repositories.ShowtimeRepository;
 import com.example.kinoxpbackend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -23,19 +23,19 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User findById(int id) {
-        return userRepository.findById(id).orElse(null);
+    public Optional<User> findById(int id) {
+        return userRepository.findById(id);
     }
 
     public List<User> findAll() {
         return userRepository.findAll();
     }
 
-    public User findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
-    public User validateUser(String email, String password) {
-        return userRepository.findByEmailAndPassword(email, password);
+    public void deleteById(int id) {
+        userRepository.deleteById(id);
     }
 }
