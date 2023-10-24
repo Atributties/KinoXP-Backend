@@ -3,10 +3,14 @@ package com.example.kinoxpbackend.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
 public class Reservation {
 
 
@@ -37,36 +41,4 @@ public class Reservation {
 
     }
 
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Showtime getShowtime() {
-        return showtime;
-    }
-
-    public void setShowtime(Showtime showtime) {
-        this.showtime = showtime;
-    }
-
-    public List<SeatReservation> getSeatReservations() {
-        return seatReservations;
-    }
-
-    public void setSeatReservations(List<SeatReservation> seatReservations) {
-        this.seatReservations = seatReservations;
-    }
 }

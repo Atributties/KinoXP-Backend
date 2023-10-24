@@ -8,6 +8,7 @@ import com.example.kinoxpbackend.enums.MovieCategories;
 import com.example.kinoxpbackend.enums.Roles;
 import com.example.kinoxpbackend.enums.TheaterName;
 import com.example.kinoxpbackend.service.*;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Component
+@Data
 public class InitData implements CommandLineRunner {
 
 
